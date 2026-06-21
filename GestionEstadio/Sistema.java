@@ -7,9 +7,9 @@ public class Sistema {
     private  List<Usuario> usuarios;
     private List<Partido> partidos;
     private List<Kit> kits;
+    private List<Compra> compras;
     
     public static void main(){
-
     }
 
     public void iniciarSesion(){  
@@ -21,7 +21,7 @@ public class Sistema {
     }
 
     public void notificar( Organizador organizador){
-        
+
     }
 
 
