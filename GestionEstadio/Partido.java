@@ -1,7 +1,5 @@
 package GestionEstadio;
 
-
-public class Compra {
-
+public class Partido {
     
 }

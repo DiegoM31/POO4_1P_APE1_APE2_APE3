@@ -1,7 +1,6 @@
 package GestionEstadio;
 
-
-public class Compra {
-
+public enum Rol {
+    O,A
     
 }
