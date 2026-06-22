@@ -29,7 +29,7 @@ public class Partido {
       this.entradasPreferencial=entradasPreferencial
       this.entradasVIP=entradasVIP
     }
-    ////getters
+    ////getters 
     public String getCodigo(){
         return codigo;
     }
