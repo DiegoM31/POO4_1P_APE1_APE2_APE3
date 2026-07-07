@@ -1,6 +1,6 @@
 package GestionEstadio;
 
-import java.util,Date;
+import java.util.Date;
 
 public class Partido {
     private String codigo;
@@ -16,18 +16,18 @@ public class Partido {
     private int entradasVIP;
 
 
-    public partido(String codigo,String seleccionLocal,String seleccionVisitante,Date fecha,String estadio,String ciudad,int capacidad,int entradasGeneral,int entradasPreferencial,int entradasVIP){
+    public Partido(String codigo,String seleccionLocal,String seleccionVisitante,Date fecha,String estadio,String ciudad,int capacidad,int entradasGeneral,int entradasPreferencial,int entradasVIP){
         
-      this.codigo=codigo
-      this.seleccionLocal=seleccionLocal
-      this.seleccionVisitante=seleccionVisitante
-      this.fecha=fecha
-      this.estadio=estadio
-      this.ciudad=ciudad
-      this.capacidad=capacidad
-      this.entradasGeneral=entradasGeneral
-      this.entradasPreferencial=entradasPreferencial
-      this.entradasVIP=entradasVIP
+      this.codigo=codigo;
+      this.seleccionLocal=seleccionLocal;
+      this.seleccionVisitante=seleccionVisitante;
+      this.fecha=fecha;
+      this.estadio=estadio;
+      this.ciudad=ciudad;
+      this.capacidad=capacidad;
+      this.entradasGeneral=entradasGeneral;
+      this.entradasPreferencial=entradasPreferencial;
+      this.entradasVIP=entradasVIP;
     }
     ////getters 
     public String getCodigo(){
@@ -63,33 +63,33 @@ public class Partido {
     }
     ///setters
     public void setCodigo(String codigo){
-        this.codigo=codigo
+        this.codigo=codigo;
     }
     public void setSeleccionLocal(String seleccionLocal){
-        this.seleccionLocal=seleccionLocal
+        this.seleccionLocal=seleccionLocal;
     }
     public void setSeleccionVisitante(String seleccionVisitante){
-        this.seleccionVisitante=seleccionVisitante
+        this.seleccionVisitante=seleccionVisitante;
     }
     public void setFecha(Date fecha){
-        this.fecha=fecha
+        this.fecha=fecha;
     }
     public void setEstadio(String estadio){
-        this.estadio=estadio
+        this.estadio=estadio;
     }
     public void seCiudad(String ciudad){
-        this.ciudad=ciudad
+        this.ciudad=ciudad;
     }
     public void setCapacidad(int capacidad){
-        this.capacidad=capacidad
+        this.capacidad=capacidad;
     }
     public void setEntradasGeneral(int entradasGeneral){
-        this.entradasGeneral=entradasGeneral
+        this.entradasGeneral=entradasGeneral;
     }
     public void setEntradasPreferencial(int entradasPreferencial){
-        this.entradasPreferencial=entradasPreferencial
+        this.entradasPreferencial=entradasPreferencial;
     }
     public void setEntradasVIP(int entradasVIP){
-        this.entradasVIP=entradasVIP
+        this.entradasVIP=entradasVIP;
     }
 }
