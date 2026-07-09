@@ -81,6 +81,11 @@ public class Usuario {
     public void consularEntrada(){
     }
 
+
+    public void mostrarMenu() {
+        System.out.println("Menú de opciones:");
+    }
+
     
 
 

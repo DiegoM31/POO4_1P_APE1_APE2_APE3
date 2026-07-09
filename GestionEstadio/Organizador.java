@@ -6,12 +6,49 @@ public class Organizador extends Usuario {
     private String cargo;
 
     //Se define sus constructor
-    public Organizador(String codigoUnico, String cedula, String nombre, String apellido, String usuario,
-        String contraseña, String correo, Rol rol) {
+    public Organizador(String codigoUnico, String cedula, String nombre, String apellido, String usuario, String contraseña, String correo, Rol rol, String empresa, String cargo) {
         super(codigoUnico, cedula, nombre, apellido, usuario, contraseña, correo, rol);
         this.empresa=empresa;
         this.cargo=cargo;
     }
+
+
+    public Organizador(String codigoUnico, String cedula, String nombre, String apellido, String empresa, String cargo) {
+        super(codigoUnico, cedula, nombre, apellido, null, null, null, Rol.O);
+        this.empresa = empresa;
+        this.cargo = cargo;
+    }
+
+
+
+    @Override
+    public void mostrarMenu() {
+                System.out.println("Menú de Organizador: \r\n" + //
+                                    "1. Generar reporte de ventas \r\n" + //
+                                    "2. Salir \r\n" + //
+                                    "Seleccione una opción: ");
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+
+
+
+
+
+
 
     @Override
     public void consularEntrada(){
@@ -23,24 +60,7 @@ public class Organizador extends Usuario {
     }
 
     public void salir(){
-
-    }
-    //Metodos Getters y Setters
-    public String getempresa() {
-        return empresa;
-    }
-
-    public void setempresa(String empresa) {
-        this.empresa = empresa;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
+  }
 
 }
     

@@ -1,6 +1,8 @@
 package GestionEstadio;
 
-
+import GestionEstadio.Aficionado;
+import GestionEstadio.Organizador;  
+import GestionEstadio.Usuario;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -40,18 +42,55 @@ public class Sistema {
         String contraseñaI = sc.nextLine();
         boolean usuarioEncontrado = false;
         for (Usuario u : this.usuarios) {
-            // Aquí es donde verificamos si el usuario y la contraseña coinciden
-            // Usamos los métodos getUsuario() y getContraseña() de la clase Usuario
             if (u.getUsuario().equals(usuarioI) && u.getContraseña().equals(contraseñaI)) {
                 usuarioEncontrado = true;
                 System.out.println("¡Inicio de sesión exitoso!");
-                System.out.println("Bienvenido/a " + u.getNombre() + " " + u.getApellido());
+                
+
+
+                Rol rol = u.getRol();
+                if (rol == Rol.A) {
+                    System.out.println("Su rol es: Aficionado.");
+                    System.out.println("Bienvenido/a " + u.getNombre() + " " + u.getApellido());
+                    Aficionado a1 =(Aficionado) u; // Downcasting de Usuario a Aficionado
+                    System.out.println("Su numero de celular es: " + a1.getCelular());
+                    System.out.println("¿Este número de celular es correcto? (S/N): S para sí, N para no: ");
+                    String Celular= sc.nextLine();
+
+
+
+                    if(Celular.equals("S")){
+                        a1.mostrarMenu();
+                    String opcion = sc.nextLine();
+                    } else {
+                        System.out.println("Verificación fallida.   \r\n" + //
+                                            "Por motivos de seguridad se cerrará la sesión. \r\n" + //
+                                            "Saliendo del sistema... ");
+
+                    }
+                } else if (rol == Rol.O) {
+                    System.out.println("Su rol es: Organizador.");
+                    System.out.println("Bienvenido/a " + u.getNombre() + " " + u.getApellido());
+                    Organizador o1 =(Organizador) u; // Downcasting de Usuario a Organizador
+                    System.out.println("Empresa asignada: " + o1.getEmpresa());
+                    String Empresa= sc.nextLine();
+                    if(Empresa.equals("S")){
+                        o1.mostrarMenu();
+                    String opcion = sc.nextLine();
+                    } else {
+                        System.out.println("Verificación fallida.   \r\n" + //
+                                            "Por motivos de seguridad se cerrará la sesión. \r\n" + //
+                                            "Saliendo del sistema... ");
+
+                    }
                 break; // Salimos del método si encontramos al usuario
             } 
+            
+        }
         }
         if(!usuarioEncontrado) {
             System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
-        }
+            } 
     }
 
 
@@ -83,6 +122,9 @@ public class Sistema {
 
 
 
+    public void mostrarMenu(){
+
+    }
 
 
 
@@ -92,30 +134,60 @@ public class Sistema {
 
 
 
+private void cargarUsuariosDesdeArchivo() {
+    // 1. Cargamos cada archivo UNA SOLA VEZ en memoria RAM al iniciar el método
+    ArrayList<String> lineasUsuarios = Archivos.cargarUsuarios("usuarios.txt");
+    ArrayList<String> lineasAficionados = Archivos.cargarUsuarios("aficionados.txt");
+    ArrayList<String> lineasOrganizadores = Archivos.cargarUsuarios("organizadores.txt");
 
-    private void cargarUsuariosDesdeArchivo() {
-        // Llamamos al método estático que ya creaste en tu clase Archivos
-        ArrayList<String> lineas = Archivos.cargarUsuarios("usuarios.txt");
+    // 2. Recorremos las líneas de usuarios saltando la cabecera
+    for (int i = 1; i < lineasUsuarios.size(); i++) {
+        String linea = lineasUsuarios.get(i);
+        String[] datos = linea.split("\\|");
 
-        // Recorremos las líneas. Empezamos en i = 1 para SALTAR la cabecera (CodigoUnico|Cedula...)
-        for (int i = 1; i < lineas.size(); i++) {
-            String linea = lineas.get(i);
-            
-            // Cortamos la línea usando el split
-            String[] datos = linea.split("\\|");
-
-            // Guardamos cada posición en variables (¡Tus índices calculados!)
-            String codigoUnico = datos[0];
-            String cedula = datos[1];
-            String nombre = datos[2];
-            String apellido = datos[3];
-            String usuario = datos[4];       // Índice 4
-            String contraseña = datos[5];       // Índice 5
-            String correo = datos[6];
-            Rol rol = Rol.valueOf(datos[7]);  
+        String codigoUnico = datos[0]; 
+        String cedula = datos[1];
+        String nombre = datos[2];
+        String apellido = datos[3];
+        String usuario = datos[4];       
+        String contraseña = datos[5];       
+        String correo = datos[6];
+        Rol rol = Rol.valueOf(datos[7].trim());  
         
-        Usuario usuario2 = new Usuario(codigoUnico, cedula, nombre, apellido, usuario, contraseña, correo, rol);
-        this.usuarios.add(usuario2);      // Índice 7
+        if (rol == Rol.A) {
+            // Buscamos los datos en la lista de aficionados que YA tenemos en memoria
+            String celular = "No asignado";
+            String paisFavorito = "No asignado";
+
+            for (int j = 1; j < lineasAficionados.size(); j++) {
+                String[] datosAficionado = lineasAficionados.get(j).split("\\|");
+                if (datosAficionado[0].equals(codigoUnico)) {
+                    celular = datosAficionado[4];      // Índice del celular
+                    paisFavorito = datosAficionado[5]; // Índice del país favorito
+                    break; // Salimos del bucle interno al encontrar la coincidencia
+                }
+            }
+            
+            Aficionado aficionado = new Aficionado(codigoUnico, cedula, nombre, apellido, usuario, contraseña, correo, rol, celular, paisFavorito);
+            this.usuarios.add(aficionado); 
+            
+        } else if (rol == Rol.O) {
+            // Buscamos los datos en la lista de organizadores que YA tenemos en memoria
+            String empresa = "No asignada";
+            String cargo = "No asignado";
+
+            for (int k = 1; k < lineasOrganizadores.size(); k++) {
+                String[] datosOrganizador = lineasOrganizadores.get(k).split("\\|");
+                if (datosOrganizador[0].equals(codigoUnico)) {
+                    empresa = datosOrganizador[4]; // Índice de la empresa
+                    cargo = datosOrganizador[5];   // Índice del cargo
+                    break; // Salimos del bucle interno al encontrar la coincidencia
+                }
+            }
+            
+            Organizador organizador = new Organizador(codigoUnico, cedula, nombre, apellido, usuario, contraseña, correo, rol, empresa, cargo);
+            this.usuarios.add(organizador);
         }
     }
+}
 }
