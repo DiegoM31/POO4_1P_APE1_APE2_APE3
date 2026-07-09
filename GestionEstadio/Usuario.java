@@ -21,65 +21,72 @@ public class Usuario {
         this.rol=rol;
     }
 
-    public void setcodigoUnico(String codigoUnico){
+    public void setCodigoUnico(String codigoUnico){
         this.codigoUnico= codigoUnico;
     }
-    public String getcodigoUnico(){
+    public String getCodigoUnico(){
         return this.codigoUnico;
     }
     
-    public void setcedula(String cedula){
+    public void setCedula(String cedula){
         this.cedula= cedula;
     }
-    public String getcedula(){
+    public String getCedula(){
         return this.cedula;
     }
 
-    public void setnombre(String nombre){
+    public void setNombre(String nombre){
         this.nombre= nombre;
     }
-    public String getnombre(){
+    public String getNombre(){
         return this.nombre;
     }
 
-    public void setapellido(String apellido){
+    public void setApellido(String apellido){
         this.apellido= apellido;
     }
-    public String getapellido(){
+    public String getApellido(){
         return this.apellido;
     }
 
-    public void setusuario(String usuario){
+    public void setUsuario(String usuario){
         this.usuario= usuario;
     }
-    public String getusuario(){
+    public String getUsuario(){
         return this.usuario;
     }
 
-    public void setcontraseña(String contraseña){
+    public void setContraseña(String contraseña){
         this.contraseña= contraseña;
     }
-    public String getcontraseña(){
+    public String getContraseña(){
         return this.contraseña;
     }
 
-    public void setcorreo(String correo){
+    public void setCorreo(String correo){
         this.correo= correo;
     }
-    public String getcorreo(){
+    public String getCorreo(){
         return this.correo;
     }
     
-    public void setrol(Rol rol){
+    public void setRol(Rol rol){
         this.rol= rol;
     }
-    public Rol getrol(){
+    public Rol getRol(){
         return this.rol;
     }
 
 
     public void consularEntrada(){
     }
+
+
+    public void mostrarMenu() {
+        System.out.println("Menú de opciones:");
+    }
+
+    
 
 
 
