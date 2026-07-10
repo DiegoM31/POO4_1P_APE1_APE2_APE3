@@ -1,6 +1,8 @@
 package GestionEstadio;
+import java.util.List;
+import java.util.ArrayList;
 
-public class Usuario {
+public abstract class Usuario {
     protected String codigoUnico;
     protected String cedula;
     protected String nombre;
@@ -78,13 +80,13 @@ public class Usuario {
     }
 
 
-    public void consularEntrada(){
-    }
+    public abstract void consultarEntrada();
 
 
     public void mostrarMenu() {
         System.out.println("Menú de opciones:");
     }
+
 
     
 

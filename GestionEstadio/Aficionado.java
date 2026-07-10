@@ -20,13 +20,13 @@ public class Aficionado extends Usuario {
 
     @Override
     public void mostrarMenu() {
-                System.out.println("Menú de Aficionado: \r\n" + //
-                                    "1. Consultar partidos \r\n" + //
-                                    "2. Comprar entrada \r\n" + //
-                                    "3. Comprar kit de entradas \r\n" + //
-                                    "4. Consultar entradas \r\n" + //
-                                    "5. Salir \r\n" + //
-                                    "Seleccione una opción: ");
+        System.out.println("Menú de Aficionado: \r\n" + //
+            "1. Consultar partidos \r\n" + //
+            "2. Comprar entrada \r\n" + //
+            "3. Comprar kit de entradas \r\n" + //
+            "4. Consultar entradas \r\n" + //
+            "5. Salir \r\n" + //
+            "Seleccione una opción: ");
     }
 
 
@@ -47,7 +47,7 @@ public class Aficionado extends Usuario {
 
 
     @Override
-    public void consularEntrada(){
+    public void consultarEntrada(){
         System.out.println();
     }
 
