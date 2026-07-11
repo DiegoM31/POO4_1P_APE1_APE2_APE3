@@ -1,5 +1,9 @@
 package GestionEstadio;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Partido {
@@ -13,10 +17,11 @@ public class Partido {
 
     private int entradasGeneral;
     private int entradasPreferencial;
-    private int entradasVIP;
+    private int entradasVIP; 
+    private String fase;
 
 
-    public Partido(String codigo,String seleccionLocal,String seleccionVisitante,Date fecha,String estadio,String ciudad,int capacidad,int entradasGeneral,int entradasPreferencial,int entradasVIP){
+    public Partido(String codigo,String seleccionLocal,String seleccionVisitante,Date fecha,String estadio,String ciudad,int capacidad,int entradasGeneral,int entradasPreferencial,int entradasVIP,String fase){
         
       this.codigo=codigo;
       this.seleccionLocal=seleccionLocal;
@@ -28,6 +33,7 @@ public class Partido {
       this.entradasGeneral=entradasGeneral;
       this.entradasPreferencial=entradasPreferencial;
       this.entradasVIP=entradasVIP;
+      this.fase=fase;
     }
     ////getters 
     public String getCodigo(){
@@ -36,7 +42,7 @@ public class Partido {
     public String getSeleccionLocal(){
         return seleccionLocal;
     }
-    public String getSeleleccionVisitante(){
+    public String getSeleccionVisitante(){
         return seleccionVisitante;
     }
     public Date getFecha(){
@@ -44,7 +50,8 @@ public class Partido {
     }
     public String GetEstadio(){
         return estadio;
-    }public String getCiudad(){
+    }
+    public String getCiudad(){
         return ciudad;
     }
     public int getCapacidad(){
@@ -60,6 +67,9 @@ public class Partido {
     
     public int getentradasVIP(){
         return entradasVIP;
+    }
+    public String getFase(){
+        return fase;
     }
     ///setters
     public void setCodigo(String codigo){
@@ -92,4 +102,46 @@ public class Partido {
     public void setEntradasVIP(int entradasVIP){
         this.entradasVIP=entradasVIP;
     }
+    public void setFase(String fase){
+        this.fase=fase;
+    }
+
+    public static ArrayList<Partido> cargarpartidos(String archivo){
+        ArrayList<Partido> partidos = new ArrayList<>();
+
+        try{ 
+            BufferedReader br= new BufferedReader(new FileReader(archivo));
+
+            String linea;
+            
+            br.readLine(); //saltar el encabezado
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+
+        while ((linea = br.readLine()) != null) {
+
+            String[] datos = linea.split("\\|");
+
+            Partido partido = new Partido(
+                    datos[0].trim(),                         // Código
+                    datos[1].trim(),                         // Selección local
+                    datos[2].trim(),                         // Selección visitante
+                    formato.parse(datos[3].trim()),          // Fecha
+                    datos[4].trim(),                         // Estadio
+                    datos[5].trim(),                         // Ciudad
+                    Integer.parseInt(datos[6].trim()),       // Capacidad
+                    Integer.parseInt(datos[7].trim()),       // General
+                    Integer.parseInt(datos[8].trim()),       // Preferencial
+                    Integer.parseInt(datos[9].trim()),        // VIP
+                    datos[10].trim()                          // datos[10] = Fase
+            );
+
+            partidos.add(partido);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return partidos;
 }
+    }
