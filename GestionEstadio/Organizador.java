@@ -1,13 +1,12 @@
 package GestionEstadio;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Organizador extends Usuario {
-    //Se definen sus atributos propias
     private String empresa;
     private String cargo;
 
-    //Se define sus constructor
     public Organizador(String codigoUnico, String cedula, String nombre, String apellido, String usuario, String contraseña, String correo, Rol rol, String empresa, String cargo) {
         super(codigoUnico, cedula, nombre, apellido, usuario, contraseña, correo, rol);
         this.empresa=empresa;
@@ -29,9 +28,9 @@ public class Organizador extends Usuario {
     }
 
     @Override
-    public void consultarEntrada(){
-        System.out.println();
-        System.out.println("----------Lista de todas las compras----------");
+    public void consultarEntrada(ArrayList<Compra> listaTotal){
+    // System.out.println();
+    // System.out.println("----------Lista de todas las compras----------");
     //     for (Compra c : listacompras) {
     //         System.out.println(c.getCodigoCompra(), 
     //         c.getTipo(), 
@@ -44,12 +43,11 @@ public class Organizador extends Usuario {
     //    }
     }
 
-    public void generarReporteDeVentas(){
-    // int totalCompras = listaCompras.size();
+    public void generarReporte(ArrayList<Compra> listaTotal){
+    // int totalCompras = listaTotal.size();
     // int contEntradas = 0;
     // int contKits = 0;
     // double totalRecaudado = 0.0;
-
     // 
     // for (Compra c : listaCompras) {
     //     // Asumiendo que Compra tiene un método getTipo() que devuelve "ENTRADA" o "KIT"
@@ -71,6 +69,8 @@ public class Organizador extends Usuario {
     }
 
     public void salir(){
+
+
   }
 
     //Metodos Getters y Setters  

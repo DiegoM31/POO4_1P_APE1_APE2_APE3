@@ -80,7 +80,7 @@ public abstract class Usuario {
     }
 
 
-    public abstract void consultarEntrada();
+    public abstract void consultarEntrada(ArrayList<Compra> listaTotal);
 
 
     public void mostrarMenu() {

@@ -1,5 +1,6 @@
 package GestionEstadio;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Aficionado extends Usuario {
@@ -29,28 +30,28 @@ public class Aficionado extends Usuario {
             "Seleccione una opción: ");
     }
 
-    public void consultarPartidos(ArrayList<Partido> listaPartidos){
+    public void consultarPartidos(ArrayList<Partido> partidos){
         System.out.println("Partidos encontrados:\n");
         int contador=1;
 
-        for(Partido p: listaPartidos){
+        for(Partido p: partidos){
             System.out.println(contador + ". Código: " + p.getCodigo());
             System.out.println("Partido: " + p.getSeleccionLocal() + " vs " + p.getSeleleccionVisitante());
             System.out.println("Fecha: " + p.getFecha());
             System.out.println("Estadio: " + p.GetEstadio());
             System.out.println("Ciudad: " + p.getCiudad());
-            System.out.println("Fase: ");
+            // System.out.println("Fase: " + p.getFase());
 
             System.out.println("Zonas disponibles:");
-            // System.out.println("- GENERAL      | Disponibles: " + p.getEntradasGeneral() + " | Precio: $" + /* precio aquí */);
-            // System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + /* precio aquí */);
-            // System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" + /* precio aquí */);
+            // System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getPrecioGeneral());
+            // System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getPrecioPreferencial());
+            // System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" + p.getPrecioVIP());
             System.out.println("--------------------------------------------------");
             contador++;
         }
     }
 
-    public void comprarEntrada(){
+    public void COMPRAR(Partido partido,String zona,int cantidad){
 
         // System.out.println("Ingrese el código del partido:");
         // String codPartido = sc.nextLine();
@@ -61,55 +62,50 @@ public class Aficionado extends Usuario {
         // }
         // System.out.println("Elija la zona (a. GENERAL, b. PREFERENCIAL, c. VIP):");
         // String opcionZona = sc.nextLine();
-
         // System.out.println("Ingrese la cantidad de entradas:");
         // int cantidad = Integer.parseInt(sc.nextLine());
-        
         // double total = cantidad * precioSeleccionado;
         // System.out.println("Total a pagar: $" + total);
         // System.out.println("Ingrese número de tarjeta:");
         // String tarjeta = sc.nextLine();
-
         // System.out.println("Pago exitoso. Gracias por su compra.");
-
         // Compra nuevaCompra = new Compra("ENTRADA", p.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
-        
         // p.setEntradasGeneral(p.getEntradasGeneral() - cantidad);
+
     }
 
-    public void comprar(Partido partido,String zona,int cantidad){
-        
-    }
-
-    public void comprar(Kit kit, int candidad){
-
-        // if (kit.getDisponibles() > 0) {
-        //     System.out.println("Incluye: " + kit.getPartidos());
-        //     System.out.println("Precio total: $" + kit.getPrecio());
-        //     Scanner sc = new Scanner(System.in);
-        //     System.out.println("Ingrese número de tarjeta:");
-        //     String tarjeta = sc.nextLine();
-        // } else {
-        //     System.out.println("Kit no disponible.");
-        // }
+    public void COMPRAR(ArrayList<Kit> Kits){
+        // System.out.println("===== KITS DISPONIBLES =====");
+        //     int i = 1;
+        //     for (Kit k : Kits) {
+        //         System.out.println(i + ". " + k.getNombre());
+        //         System.out.println("Incluye:");
+                
+        //         // Asumiendo que getPartidos() retorna una lista o un String formateado
+        //         // k.getPartidos() podría devolver los nombres de los equipos
+        //         System.out.println("- " + k.getPartidos()); 
+                
+        //         System.out.println("Precio: $" + String.format("%.2f", k.getPrecio()));
+        //         System.out.println("Disponibles: " + k.getDisponibles());
+        //         System.out.println("--------------------------------------------------");
+        //         i++;
+        //     }
     }
 
     @Override
-    public void consultarEntrada(){
+    public void consultarEntrada(ArrayList<Compra> listaTotal){
 
-    // boolean tieneCompras = false;
     // for (Compra c : listaTotal) {
     //     if (c.getCodigoAficionado().equals(this.codigoUnico)) { 
-    //             c.getCodigoCompra(), 
-    //             c.getTipo(), 
-    //             c.getFechaCompra(), 
-    //             c.getCodigoReferencia(), 
-    //             c.getValorPagado());
-    //         tieneCompras = true;
+    //             System.out.println(c.getCodigoCompra()); 
+    //             System.out.println(c.getTipo()); 
+    //             System.out.println(c.getFechaCompra()); 
+    //             System.out.println(c.getCodigoReferencia()); 
+    //             System.out.println(c.getValorPagado());
+    // 
     //     }
-    //     
-    //} if (!tieneCompras) {
-    //     System.out.println("No registra compras realizadas hasta el momento.");
+    //}     
+    //
     }
 
     //Metodos Getters y Setters
