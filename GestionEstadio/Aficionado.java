@@ -1,4 +1,5 @@
 package GestionEstadio;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -45,13 +46,13 @@ public class Aficionado extends Usuario {
             System.out.println("Zonas disponibles:");
             // System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getPrecioGeneral());
             // System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getPrecioPreferencial());
-            // System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" + p.getPrecioVIP());
+            // System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" + p.Kit().getPrecio());
             System.out.println("--------------------------------------------------");
             contador++;
         }
     }
 
-    public void COMPRAR(Partido partido,String zona,int cantidad){
+    public void COMPRAR(Partido partido,String zona,int cantidad, ArrayList<Compra> listaCompras){
 
         // System.out.println("Ingrese el código del partido:");
         // String codPartido = sc.nextLine();
