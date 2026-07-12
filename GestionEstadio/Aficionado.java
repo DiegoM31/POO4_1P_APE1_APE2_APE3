@@ -44,15 +44,15 @@ public class Aficionado extends Usuario {
             System.out.println("Fase: " + p.getFase());
 
             System.out.println("Zonas disponibles:");
-            // System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getPrecioGeneral());
-            // System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getPrecioPreferencial());
-            // System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" + p.Kit().getPrecio());
+            // System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getValorPagado());
+            // System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getValorPagado());
+            // System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" + p.getValorPagado());
             System.out.println("--------------------------------------------------");
             contador++;
         }
     }
 
-    public void COMPRAR(Partido partido,String zona,int cantidad, ArrayList<Compra> listaCompras){
+    public void COMPRAR(Partido partido,String zona,int cantidad, ArrayList<Compra> listaCompras, Scanner sc){
 
         // System.out.println("Ingrese el código del partido:");
         // String codPartido = sc.nextLine();
@@ -75,17 +75,10 @@ public class Aficionado extends Usuario {
 
     }
 
-    public void COMPRAR(ArrayList<Kit> Kits){
+    public void COMPRAR(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos){
         System.out.println("===== KITS DISPONIBLES =====");
-            int i = 1;
-            for (Kit k : Kits) {
-                System.out.println(i + ". " + k.getNombre());
-                System.out.println("Incluye:");
-                System.out.println("- " + k.getPartidosIncluidos()); 
-                System.out.println("Precio: $" + String.format("%.2f", k.getPrecio()));
-                System.out.println("Disponibles: " + k.getDisponibles());
-                System.out.println("--------------------------------------------------");
-                i++;
+            for (int i = 0; i < listaKits.size(); i++) {
+                System.out.println((i + 1) + ". " + listaKits.get(i).toString());
             }
         }
 
