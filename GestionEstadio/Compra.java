@@ -1,5 +1,6 @@
 package GestionEstadio;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Compra {
     private static int contadorCompras=0;
