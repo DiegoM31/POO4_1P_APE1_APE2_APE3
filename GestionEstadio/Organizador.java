@@ -1,5 +1,4 @@
 package GestionEstadio;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,43 +28,35 @@ public class Organizador extends Usuario {
 
     @Override
     public void consultarEntrada(ArrayList<Compra> listaTotal){
-    // System.out.println();
-    // System.out.println("----------Lista de todas las compras----------");
-    //     for (Compra c : listacompras) {
-    //         System.out.println(c.getCodigoCompra(), 
-    //         c.getTipo(), 
-    //         c.getCodigoReferencia(), 
-    //         c.getFecha(), 
-    //         c.getCantidad(), 
-    //         c.getValorPagado(), 
-    //         c.getEstado(), 
-    //         c.getCodigoAficionado());               
-    //    }
+    System.out.println("----------Lista de todas las compras----------");
+        for (Compra c : listaTotal) {
+            System.out.println(c.toString());              
+       }
     }
 
     public void generarReporte(ArrayList<Compra> listaTotal){
-    // int totalCompras = listaTotal.size();
-    // int contEntradas = 0;
-    // int contKits = 0;
-    // double totalRecaudado = 0.0;
-    // 
-    // for (Compra c : listaCompras) {
-    //     // Asumiendo que Compra tiene un método getTipo() que devuelve "ENTRADA" o "KIT"
-    //     if (c.getTipo().equalsIgnoreCase("ENTRADA")) {
-    //         contEntradas++;
-    //     } else if (c.getTipo().equalsIgnoreCase("KIT")) {
-    //         contKits++;
-    //     }
-    //     totalRecaudado += c.getValorPagado();
-    // }
+    int totalCompras = listaTotal.size();
+    int contEntradas = 0;
+    int contKits = 0;
+    double totalRecaudado = 0.0;
+    
+    for (Compra c : listaTotal) {
+        
+        if (c.getTipo().equalsIgnoreCase("ENTRADA")) {
+            contEntradas++;
+        } else if (c.getTipo().equalsIgnoreCase("KIT")) {
+            contKits++;
+        }
+        totalRecaudado += c.getValorPagado();
+    }
 
-    // // Mostrar el reporte en consola
-    // System.out.println("=====GENERAR REPORTE DE VENTAS=====");
-    // System.out.println("Resumen de ventas registradas:");
-    // System.out.println("Total de compras: " + totalCompras);
-    // System.out.println("Compras por tipo:");
-    // System.out.println("Compras por tipo: "+"Entradas: "+ contEntradas +"Kits: "+ contKits +);
-    // System.out.println("Monto total recaudado: "+ totalRecaudado +);
+    // Mostrar el reporte en consola
+    System.out.println("=====GENERAR REPORTE DE VENTAS=====");
+    System.out.println("Resumen de ventas registradas:");
+    System.out.println("Total de compras: " + totalCompras);
+    System.out.println("Compras por tipo:");
+    System.out.println("Compras por tipo: "+"Entradas: "+ contEntradas +"Kits: "+ contKits );
+    System.out.println("Monto total recaudado: "+ String.format("%.2f", totalRecaudado));
     }
 
     public void salir(){

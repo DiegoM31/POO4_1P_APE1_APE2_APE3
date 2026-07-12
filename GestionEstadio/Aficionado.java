@@ -75,38 +75,28 @@ public class Aficionado extends Usuario {
     }
 
     public void COMPRAR(ArrayList<Kit> Kits){
-        // System.out.println("===== KITS DISPONIBLES =====");
-        //     int i = 1;
-        //     for (Kit k : Kits) {
-        //         System.out.println(i + ". " + k.getNombre());
-        //         System.out.println("Incluye:");
-                
-        //         // Asumiendo que getPartidos() retorna una lista o un String formateado
-        //         // k.getPartidos() podría devolver los nombres de los equipos
-        //         System.out.println("- " + k.getPartidos()); 
-                
-        //         System.out.println("Precio: $" + String.format("%.2f", k.getPrecio()));
-        //         System.out.println("Disponibles: " + k.getDisponibles());
-        //         System.out.println("--------------------------------------------------");
-        //         i++;
-        //     }
-    }
+        System.out.println("===== KITS DISPONIBLES =====");
+            int i = 1;
+            for (Kit k : Kits) {
+                System.out.println(i + ". " + k.getNombre());
+                System.out.println("Incluye:");
+                System.out.println("- " + k.getPartidosIncluidos()); 
+                System.out.println("Precio: $" + String.format("%.2f", k.getPrecio()));
+                System.out.println("Disponibles: " + k.getDisponibles());
+                System.out.println("--------------------------------------------------");
+                i++;
+            }
+        }
 
     @Override
     public void consultarEntrada(ArrayList<Compra> listaTotal){
-
-    // for (Compra c : listaTotal) {
-    //     if (c.getCodigoAficionado().equals(this.codigoUnico)) { 
-    //             System.out.println(c.getCodigoCompra()); 
-    //             System.out.println(c.getTipo()); 
-    //             System.out.println(c.getFechaCompra()); 
-    //             System.out.println(c.getCodigoReferencia()); 
-    //             System.out.println(c.getValorPagado());
-    
-    //     }
-    // }     
-    
-    }
+    System.out.println("Mis compras realizadas:");
+        for (Compra c : listaTotal) {
+            if (c.getCodigoAficionado().equals(this.codigoUnico)) {
+                System.out.println(c.toString());
+            }
+        }
+    }     
 
     //Metodos Getters y Setters
      public void setCelular(String celular){
