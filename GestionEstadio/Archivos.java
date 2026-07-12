@@ -127,6 +127,15 @@ public class Archivos {
         }
         return lineas;
 
-    }            
+    }
+    
+    public static void guardarCompra(Compra compra) {
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter("compras.txt", true))) {
+        bw.write(compra.formatToLineaArchivo());
+        bw.newLine();
+    } catch (Exception e) {
+        System.out.println("Error al guardar la compra: " + e.getMessage());
+    }
+}
 }
    
