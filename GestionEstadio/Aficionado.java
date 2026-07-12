@@ -36,11 +36,11 @@ public class Aficionado extends Usuario {
 
         for(Partido p: partidos){
             System.out.println(contador + ". Código: " + p.getCodigo());
-            System.out.println("Partido: " + p.getSeleccionLocal() + " vs " + p.getSeleleccionVisitante());
+            System.out.println("Partido: " + p.getSeleccionLocal() + " vs " + p.getSeleccionVisitante());
             System.out.println("Fecha: " + p.getFecha());
             System.out.println("Estadio: " + p.GetEstadio());
             System.out.println("Ciudad: " + p.getCiudad());
-            // System.out.println("Fase: " + p.getFase());
+            System.out.println("Fase: " + p.getFase());
 
             System.out.println("Zonas disponibles:");
             // System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getPrecioGeneral());
@@ -102,10 +102,10 @@ public class Aficionado extends Usuario {
     //             System.out.println(c.getFechaCompra()); 
     //             System.out.println(c.getCodigoReferencia()); 
     //             System.out.println(c.getValorPagado());
-    // 
+    
     //     }
-    //}     
-    //
+    // }     
+    
     }
 
     //Metodos Getters y Setters
