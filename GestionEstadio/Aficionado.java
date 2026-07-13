@@ -3,6 +3,7 @@ package GestionEstadio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import GestionEstadio.Compra;
 
 public class Aficionado extends Usuario {
     private String celular;
@@ -81,20 +82,20 @@ public void comprarEntrada(ArrayList<Partido> partidos) {
     String nombreZona = "";
     int stockDisponible = 0;
 
-    // Asignación de datos basada en la selección
+    // Asignación dependiendo de la opción elegida
     switch (opcion) {
         case 1:
-            precio = pElegido.getEntradasGeneral();
+            precio = pElegido.getPrecioGeneral();
             nombreZona = "General";
             stockDisponible = pElegido.getEntradasGeneral();
             break;
         case 2:
-            precio = pElegido.getEntradasPreferencial();
+            precio = pElegido.getPrecioPreferencial();
             nombreZona = "Preferencial";
             stockDisponible = pElegido.getEntradasPreferencial();
             break;
         case 3:
-            precio = pElegido.getEntradasVIP();
+            precio = pElegido.getPrecioVIP();
             nombreZona = "VIP";
             stockDisponible = pElegido.getEntradasVIP();
             break;
@@ -113,18 +114,20 @@ public void comprarEntrada(ArrayList<Partido> partidos) {
         System.out.println("Ingrese número de tarjeta:");
         String tarjeta = sc.nextLine();
         System.out.println("Pago exitoso. Gracias por su compra.");
-         Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
-    } else {
+        Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
+        Sistema.notificar(this, c1Compra);
+        } else {
         System.out.println("Stock insuficiente o cantidad no válida.");
     }
+    
     }
 
-    public void COMPRAR(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos){
+    public void comprarKit(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos){
         System.out.println("===== KITS DISPONIBLES =====");
             for (int i = 0; i < listaKits.size(); i++) {
                 System.out.println((i + 1) + ". " + listaKits.get(i).toString());
             }
-        }
+    }
 
     @Override
     public void consultarEntrada(ArrayList<Compra> listaTotal){

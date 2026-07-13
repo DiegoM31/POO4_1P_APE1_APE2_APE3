@@ -28,6 +28,7 @@ public class Sistema {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
         sistema.iniciarSecion();
+        sistema.sc.close(); // Cerramos el Scanner al final del programa
     }
 
 
@@ -73,7 +74,7 @@ public class Sistema {
                         a1.comprarEntrada(partidos); // llama a comprarEntrada()
                         break;
                     case 3:
-                    // Aquí llamas a comprarKit()
+                        a1.comprarKit(kits, partidos); // llama a comprarKit()
                         break;
                     case 4:
                         a1.consultarEntrada(compras);// llama a consultarEntradas()
@@ -119,8 +120,10 @@ public class Sistema {
 
 
 
-    public void notificar( Aficionado aficionado, Compra compra){
-
+    public static void notificar(Aficionado a, Compra c) {
+        System.out.println("--- Notificación de Compra ---");
+        System.out.println("Estimado/a " + a.getNombre() + ", su compra de entrada ha sido registrada.");
+        System.out.println("Detalles: " + c.toString());
     }
 
 
@@ -129,8 +132,12 @@ public class Sistema {
 
 
 
-    public void notificar( Organizador organizador){
+    public static void notificar(Aficionado a, Compra c, Kit k) {
+        System.out.println("--- Notificación de Compra de Kit ---");
+        System.out.println("Estimado/a " + a.getNombre() + ", su kit '" + k.getNombre() + "' ha sido adquirido con éxito.");
+        System.out.println("Total pagado: $" + c.getValorPagado());
     }
+
 
 
 
@@ -214,5 +221,7 @@ private void cargarUsuariosDesdeArchivo() {
             this.usuarios.add(organizador);
         }
     }
+} 
 }
-}
+    
+

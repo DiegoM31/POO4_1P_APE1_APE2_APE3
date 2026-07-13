@@ -156,4 +156,13 @@ public class Partido {
 
     return partidos;
 }
+
+// Agrega este método dentro de tu clase Partido.java
+    @Override
+    public String toString() {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    return "Partido: " + codigo + 
+           " | " + seleccionLocal + " vs " + seleccionVisitante + 
+           " | Fecha: " + sdf.format(fecha);
     }
+}
