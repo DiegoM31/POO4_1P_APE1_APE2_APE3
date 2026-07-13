@@ -130,8 +130,6 @@ public class Sistema {
 
 
     public void notificar( Organizador organizador){
-        organizador.generarReporteDeVentas();
-
     }
 
 
