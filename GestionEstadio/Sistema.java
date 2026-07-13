@@ -106,10 +106,10 @@ public class Sistema {
             
         }
         }
+        }
         if(!usuarioEncontrado) {
             System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
             }
-        }
     }
 
 
@@ -163,6 +163,7 @@ private void cargarUsuariosDesdeArchivo() {
     ArrayList<String> lineasUsuarios = Archivos.cargarUsuarios("usuarios.txt");
     ArrayList<String> lineasAficionados = Archivos.cargarUsuarios("aficionados.txt");
     ArrayList<String> lineasOrganizadores = Archivos.cargarUsuarios("organizadores.txt");
+    this.partidos = Partido.cargarpartidos("partidos.txt");
 
     // 2. Recorremos las líneas de usuarios saltando la cabecera
     for (int i = 1; i < lineasUsuarios.size(); i++) {

@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Aficionado extends Usuario {
     private String celular;
     private String paisFavorito;
+    Scanner sc = new Scanner(System.in);
 
     public Aficionado(String codigoUnico, String cedula, String nombre, String apellido, String usuario, String contraseña, String correo, Rol rol, String celular, String paisFavorito) {
         super(codigoUnico, cedula, nombre, apellido, usuario, contraseña, correo, rol);
@@ -36,11 +37,11 @@ public class Aficionado extends Usuario {
     }
 
     public void consultarPartidos(ArrayList<Partido> partidos){
-        System.out.println("Partidos encontrados:\n");
+        System.out.println("Partidos encontrados:");
         int contador=1;
 
         for(Partido p: partidos){
-            System.out.println(contador++ + ". Código: " + p.getCodigo());
+            System.out.println( "\n " + contador++ + ". Código: " + p.getCodigo());
             System.out.println("Partido: " + p.getSeleccionLocal() + " vs " + p.getSeleccionVisitante());
             System.out.println("Fecha: " + p.getFecha());
             System.out.println("Estadio: " + p.GetEstadio());
@@ -48,35 +49,74 @@ public class Aficionado extends Usuario {
             System.out.println("Fase: " + p.getFase());
 
             System.out.println("Zonas disponibles:");
-            // System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getValorPagado());
-            // System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getValorPagado());
-            // System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" + p.getValorPagado());
+            System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getPrecioGeneral());
+            System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getPrecioPreferencial());
+            System.out.println("- VIP          | Disponibles: " + p.getEntradasVIP() + " | Precio: $" + p.getPrecioVIP());
             System.out.println("--------------------------------------------------");
             contador++;
         }
     }
 
-    public void COMPRAR(Partido partido,String zona,int cantidad, ArrayList<Compra> listaCompras, Scanner sc){
+    // Dentro de Aficionado.java, reemplaza tu método actual por esta estructura
+public void comprarEntrada(ArrayList<Partido> partidos) {
+    System.out.println("Seleccione el código del partido:");
+    String codSeleccionado = sc.nextLine();
+    
+    // 2. Buscar el objeto Partido en tu ArrayList 'partidos'
+    Partido pElegido = null;
+    for (Partido p : partidos) {
+        if (p.getCodigo().equalsIgnoreCase(codSeleccionado)) {
+            pElegido = p;
+            break;
+        }
+    }
+    if (pElegido == null) {
+        System.out.println("Partido no encontrado.");
+        return;
+    }
+    System.out.println("Elija la zona: 1. General, 2. Preferencial, 3. VIP");
+    int opcion = Integer.parseInt(sc.nextLine());
 
-         System.out.println("Ingrese el código del partido:");
-         String codPartido = sc.nextLine();
-         Partido p = buscarPartido(listaPartidos, codPartido); 
-         if (p == null) {
-             System.out.println("Partido no encontrado.");
-             return;
-         }
-         System.out.println("Elija la zona (a. GENERAL, b. PREFERENCIAL, c. VIP):");
-         String opcionZona = sc.nextLine();
-         System.out.println("Ingrese la cantidad de entradas:");
-         int cantidad1 = Integer.parseInt(sc.nextLine());
-         double total = cantidad1 * precioSeleccionado;
-         System.out.println("Total a pagar: $" + total);
-         System.out.println("Ingrese número de tarjeta:");
-         String tarjeta = sc.nextLine();
-         System.out.println("Pago exitoso. Gracias por su compra.");
-         Compra nuevaCompra = new Compra("ENTRADA", p.getCodigo(), new Date(), cantidad1, total, this.getCodigoUnico());
-         p.setEntradasGeneral(p.getEntradasGeneral() - cantidad1);
+    double precio = 0;
+    String nombreZona = "";
+    int stockDisponible = 0;
 
+    // Asignación de datos basada en la selección
+    switch (opcion) {
+        case 1:
+            precio = pElegido.getEntradasGeneral();
+            nombreZona = "General";
+            stockDisponible = pElegido.getEntradasGeneral();
+            break;
+        case 2:
+            precio = pElegido.getEntradasPreferencial();
+            nombreZona = "Preferencial";
+            stockDisponible = pElegido.getEntradasPreferencial();
+            break;
+        case 3:
+            precio = pElegido.getEntradasVIP();
+            nombreZona = "VIP";
+            stockDisponible = pElegido.getEntradasVIP();
+            break;
+        default:
+            System.out.println("Opción inválida.");
+            return;
+    }
+
+    System.out.println("Ingrese cantidad:");
+    int cantidad = Integer.parseInt(sc.nextLine());
+
+    if (cantidad > 0 && cantidad <= stockDisponible) {
+        double total = cantidad * precio;
+        pElegido.setEntradasGeneral(pElegido.getEntradasGeneral() - cantidad);
+        System.out.println("Total a pagar: $" + total);
+        System.out.println("Ingrese número de tarjeta:");
+        String tarjeta = sc.nextLine();
+        System.out.println("Pago exitoso. Gracias por su compra.");
+         Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
+    } else {
+        System.out.println("Stock insuficiente o cantidad no válida.");
+    }
     }
 
     public void COMPRAR(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos){
@@ -111,4 +151,14 @@ public class Aficionado extends Usuario {
         return this.paisFavorito;
     }
 
+    public Partido buscarPartido(ArrayList<Partido> listaPartidos, String codigo) {
+        for (Partido partido : listaPartidos) {
+            if (partido.getCodigo().equals(codigo)) {
+                return partido;
+            }
+        }
+        return null; // Retorna null si no se encuentra el partido
+    }
+
+    
 }
