@@ -21,14 +21,18 @@ public class Aficionado extends Usuario {
     }
 
     @Override
-    public void mostrarMenu() {
+    public int mostrarMenu() {
         System.out.println("Menú de Aficionado: \r\n" + //
             "1. Consultar partidos \r\n" + //
             "2. Comprar entrada \r\n" + //
             "3. Comprar kit de entradas \r\n" + //
             "4. Consultar entradas \r\n" + //
-            "5. Salir \r\n" + //
-            "Seleccione una opción: ");
+            "5. Salir \r\n"); //
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Seleccione una opción: ");
+            int opcion = sc.nextInt();
+            return opcion;
+
     }
 
     public void consultarPartidos(ArrayList<Partido> partidos){
@@ -36,7 +40,7 @@ public class Aficionado extends Usuario {
         int contador=1;
 
         for(Partido p: partidos){
-            System.out.println(contador + ". Código: " + p.getCodigo());
+            System.out.println(contador++ + ". Código: " + p.getCodigo());
             System.out.println("Partido: " + p.getSeleccionLocal() + " vs " + p.getSeleccionVisitante());
             System.out.println("Fecha: " + p.getFecha());
             System.out.println("Estadio: " + p.GetEstadio());
@@ -54,24 +58,24 @@ public class Aficionado extends Usuario {
 
     public void COMPRAR(Partido partido,String zona,int cantidad, ArrayList<Compra> listaCompras, Scanner sc){
 
-        // System.out.println("Ingrese el código del partido:");
-        // String codPartido = sc.nextLine();
-        // Partido p = buscarPartido(listaPartidos, codPartido); 
-        // if (p == null) {
-        //     System.out.println("Partido no encontrado.");
-        //     return;
-        // }
-        // System.out.println("Elija la zona (a. GENERAL, b. PREFERENCIAL, c. VIP):");
-        // String opcionZona = sc.nextLine();
-        // System.out.println("Ingrese la cantidad de entradas:");
-        // int cantidad = Integer.parseInt(sc.nextLine());
-        // double total = cantidad * precioSeleccionado;
-        // System.out.println("Total a pagar: $" + total);
-        // System.out.println("Ingrese número de tarjeta:");
-        // String tarjeta = sc.nextLine();
-        // System.out.println("Pago exitoso. Gracias por su compra.");
-        // Compra nuevaCompra = new Compra("ENTRADA", p.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
-        // p.setEntradasGeneral(p.getEntradasGeneral() - cantidad);
+         System.out.println("Ingrese el código del partido:");
+         String codPartido = sc.nextLine();
+         Partido p = buscarPartido(listaPartidos, codPartido); 
+         if (p == null) {
+             System.out.println("Partido no encontrado.");
+             return;
+         }
+         System.out.println("Elija la zona (a. GENERAL, b. PREFERENCIAL, c. VIP):");
+         String opcionZona = sc.nextLine();
+         System.out.println("Ingrese la cantidad de entradas:");
+         int cantidad1 = Integer.parseInt(sc.nextLine());
+         double total = cantidad1 * precioSeleccionado;
+         System.out.println("Total a pagar: $" + total);
+         System.out.println("Ingrese número de tarjeta:");
+         String tarjeta = sc.nextLine();
+         System.out.println("Pago exitoso. Gracias por su compra.");
+         Compra nuevaCompra = new Compra("ENTRADA", p.getCodigo(), new Date(), cantidad1, total, this.getCodigoUnico());
+         p.setEntradasGeneral(p.getEntradasGeneral() - cantidad1);
 
     }
 

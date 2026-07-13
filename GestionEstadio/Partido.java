@@ -19,6 +19,9 @@ public class Partido {
     private int entradasPreferencial;
     private int entradasVIP; 
     private String fase;
+    private double precioGeneral = 50.0;
+    private double precioPreferencial = 100.0;
+    private double precioVIP = 200.0;
 
 
     public Partido(String codigo,String seleccionLocal,String seleccionVisitante,Date fecha,String estadio,String ciudad,int capacidad,int entradasGeneral,int entradasPreferencial,int entradasVIP,String fase){
@@ -65,11 +68,20 @@ public class Partido {
         return entradasPreferencial;
     }
     
-    public int getentradasVIP(){
+    public int getEntradasVIP(){
         return entradasVIP;
     }
     public String getFase(){
         return fase;
+    }
+    public double getPrecioGeneral(){
+        return precioGeneral;
+    }
+    public double getPrecioPreferencial(){
+        return precioPreferencial;
+    }
+    public double getPrecioVIP(){
+        return precioVIP;
     }
     ///setters
     public void setCodigo(String codigo){

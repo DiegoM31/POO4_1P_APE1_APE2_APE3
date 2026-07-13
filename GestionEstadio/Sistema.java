@@ -60,19 +60,37 @@ public class Sistema {
 
 
                     if(Celular.equals("S")){
-                        a1.mostrarMenu();
-                    String opcion = sc.nextLine();
-                    } else {
-                        System.out.println("Verificación fallida.   \r\n" + //
-                                            "Por motivos de seguridad se cerrará la sesión. \r\n" + //
-                                            "Saliendo del sistema... ");
-
+                        int opcion = 0;
+                    // Bucle que mantiene el menú activo
+                    while (opcion != 5) { // Suponiendo que 5 es Salir
+                        opcion = a1.mostrarMenu(); // Esto imprime el menú y pide la opción
+            
+                         switch (opcion) {
+                    case 1:
+                        a1.consultarPartidos(partidos); // llama a consultarPartidos()
+                        break;
+                    case 2:
+                        a1.comprarEntrada(partidos); // llama a comprarEntrada()
+                        break;
+                    case 3:
+                    // Aquí llamas a comprarKit()
+                        break;
+                    case 4:
+                        a1.consultarEntrada(compras);// llama a consultarEntradas()
+                        break;
+                    case 5:
+                        System.out.println("Saliendo del sistema...");
+                        break;
+                    default:
+                        System.out.println("Opción no válida");
+                        }
                     }
                 } else if (rol == Rol.O) {
                     System.out.println("Su rol es: Organizador.");
                     System.out.println("Bienvenido/a " + u.getNombre() + " " + u.getApellido());
                     Organizador o1 =(Organizador) u; // Downcasting de Usuario a Organizador
                     System.out.println("Empresa asignada: " + o1.getEmpresa());
+                    System.out.print("¿Esta empresa es correcta? (S/N): ");
                     String Empresa= sc.nextLine();
                     if(Empresa.equals("S")){
                         o1.mostrarMenu();
@@ -90,7 +108,8 @@ public class Sistema {
         }
         if(!usuarioEncontrado) {
             System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
-            } 
+            }
+        }
     }
 
 
@@ -104,7 +123,14 @@ public class Sistema {
 
     }
 
+
+
+
+
+
+
     public void notificar( Organizador organizador){
+        organizador.generarReporteDeVentas();
 
     }
 
