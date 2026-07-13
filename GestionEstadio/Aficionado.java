@@ -122,12 +122,38 @@ public void comprarEntrada(ArrayList<Partido> partidos) {
     
     }
 
-    public void comprarKit(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos){
-        System.out.println("===== KITS DISPONIBLES =====");
-            for (int i = 0; i < listaKits.size(); i++) {
-                System.out.println((i + 1) + ". " + listaKits.get(i).toString());
-            }
+
+
+
+    public void comprarKit(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos, Sistema sistema) {
+    System.out.println("===== KITS DISPONIBLES =====");
+    for (int i = 0; i < listaKits.size(); i++) {
+        System.out.println((i + 1) + ". " + listaKits.get(i).toString());
     }
+
+    System.out.print("Seleccione el número de kit que desea comprar: ");
+    int seleccion = sc.nextInt() - 1;
+
+    if (seleccion >= 0 && seleccion < listaKits.size()) {
+        Kit kitSeleccionado = listaKits.get(seleccion);
+
+        if (kitSeleccionado.getDisponibles() > 0) {
+           
+            Compra nuevaCompra = new Compra("KIT", kitSeleccionado.getCodigo(), new java.util.Date(), 1, kitSeleccionado.getPrecio(), this.codigoUnico);
+            
+            kitSeleccionado.setDisponibles(kitSeleccionado.getDisponibles() - 1);
+            
+            System.out.println("¡Compra de kit exitosa!");
+
+            Sistema.notificar(this, nuevaCompra, kitSeleccionado);
+            
+        } else {
+            System.out.println("Lo sentimos, este kit ya no tiene stock.");
+        }
+    } else {
+        System.out.println("Opción no válida.");
+    }
+}
 
     @Override
     public void consultarEntrada(ArrayList<Compra> listaTotal){

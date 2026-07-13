@@ -56,36 +56,24 @@ public class Organizador extends Usuario {
        }
     }
 
-    public void generarReporte(ArrayList<Compra> listaTotal){
+    public void generarReporte(ArrayList<Compra> listaTotal) {
     int totalCompras = listaTotal.size();
     int contEntradas = 0;
     int contKits = 0;
-    double totalRecaudado = 0.0;
+    double montoTotal = 0.0;
     
+    // Calculamos los totales
     for (Compra c : listaTotal) {
-        
         if (c.getTipo().equalsIgnoreCase("ENTRADA")) {
             contEntradas++;
         } else if (c.getTipo().equalsIgnoreCase("KIT")) {
             contKits++;
         }
-        totalRecaudado += c.getValorPagado();
+        montoTotal += c.getValorPagado();
     }
-
-    // Mostrar el reporte en consola
-    System.out.println("=====GENERAR REPORTE DE VENTAS=====");
-    System.out.println("Resumen de ventas registradas:");
-    System.out.println("Total de compras: " + totalCompras);
-    System.out.println("Compras por tipo:");
-    System.out.println("Compras por tipo: "+"Entradas: "+ contEntradas +"Kits: "+ contKits );
-    System.out.println("Monto total recaudado: "+ String.format("%.2f", totalRecaudado));
-    }
-
-    public void salir(){
-
-
-  }
-
+    
+    Sistema.notificar(this, totalCompras, contEntradas, contKits, montoTotal);
+}
 
 }
     

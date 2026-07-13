@@ -74,7 +74,7 @@ public class Sistema {
                         a1.comprarEntrada(partidos); // llama a comprarEntrada()
                         break;
                     case 3:
-                        a1.comprarKit(kits, partidos); // llama a comprarKit()
+                        a1.comprarKit(kits, partidos, this); // llama a comprarKit()
                         break;
                     case 4:
                         a1.consultarEntrada(compras);// llama a consultarEntradas()
@@ -121,41 +121,46 @@ public class Sistema {
 
 
     public static void notificar(Aficionado a, Compra c) {
-        System.out.println("--- Notificación de Compra ---");
-        System.out.println("Estimado/a " + a.getNombre() + ", su compra de entrada ha sido registrada.");
-        System.out.println("Detalles: " + c.toString());
+        if (c == null) {
+            System.out.println("Error: No se pudo realizar la notificación porque la compra no existe (es nula).");
+            return;
+        }
+
+        System.out.println("De: correoSistema");
+        System.out.println("Para: " + a.getCorreo());
+        System.out.println("Asunto: Compra de entrada realizada");
+        System.out.println("Estimado/a " + a.getNombre() + " " + a.getApellido() + ",");
+        
+        System.out.println("Su compra ha sido registrada exitosamente con el código " + c.getCodigoCompra());
+        System.out.println("Gracias por adquirir sus entradas.");
     }
 
-
-
-
-
-
-
     public static void notificar(Aficionado a, Compra c, Kit k) {
-        System.out.println("--- Notificación de Compra de Kit ---");
-        System.out.println("Estimado/a " + a.getNombre() + ", su kit '" + k.getNombre() + "' ha sido adquirido con éxito.");
+        if (c == null || k == null) {
+            System.out.println("Error: No se puede notificar, datos de compra o kit incompletos.");
+            return;
+        }
+
+        System.out.println("Asunto: Compra de kit realizada");
+        System.out.println("Hola " + a.getNombre() + ", has adquirido el kit: " + k.getNombre());
         System.out.println("Total pagado: $" + c.getValorPagado());
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void mostrarMenu(){
-
+    public static void notificar(Organizador o, int totalCompras, int totalEntradas, int totalKits, double montoTotal) {
+        System.out.println("\n\nDe: correoSistema");
+        System.out.println("Para: " + o.getCorreo());
+        System.out.println("Asunto: Reporte de compras registradas");
+        System.out.println("Estimado/a " + o.getNombre() + ",");
+        System.out.println("Se ha generado el reporte de compras del sistema.");
+        System.out.println("Total de compras: " + totalCompras);
+        System.out.println("Entradas: " + totalEntradas + " | Kits: " + totalKits);
+        System.out.println("Monto total recaudado: $" + String.format("%.2f", montoTotal+"\n\n"));
     }
+
+
+
+
 
 
 
@@ -222,6 +227,23 @@ private void cargarUsuariosDesdeArchivo() {
         }
     }
 } 
+
+public void cargarKitsDesdeArchivo() {
+    ArrayList<String> lineas = Archivos.cargarKits("kits.txt");
+    
+    // Saltamos la cabecera (si la tiene, empieza en 1)
+    for (int i = 1; i < lineas.size(); i++) {
+        String[] datos = lineas.get(i).split("\\|");
+        String cadenaPartidos = datos[3];
+        String[] arrayPartidos = cadenaPartidos.split(","); 
+        ArrayList<String> listaPartidos = new ArrayList<>();
+        for (String p : arrayPartidos) {
+            listaPartidos.add(p.trim()); 
+        }
+        Kit k = new Kit(datos[0], datos[1], datos[2], listaPartidos, Double.parseDouble(datos[4]), Integer.parseInt(datos[5]));
+        this.kits.add(k);
+    }
+}
 }
     
 
