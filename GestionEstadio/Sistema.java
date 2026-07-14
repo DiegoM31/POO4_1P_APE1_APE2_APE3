@@ -7,6 +7,7 @@ import GestionEstadio.Usuario;
 import GestionEstadio.Partido;
 
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Sistema {
@@ -182,9 +183,9 @@ public void iniciarSecion() {
 
 private void cargarUsuariosDesdeArchivo() {
     // 1. Cargamos cada archivo UNA SOLA VEZ en memoria RAM al iniciar el método
-    ArrayList<String> lineasUsuarios = Archivos.cargarUsuarios("usuarios.txt");
-    ArrayList<String> lineasAficionados = Archivos.cargarUsuarios("aficionados.txt");
-    ArrayList<String> lineasOrganizadores = Archivos.cargarUsuarios("organizadores.txt");
+    ArrayList<String> lineasUsuarios = Archivos.leerArchivo("usuarios.txt");
+    ArrayList<String> lineasAficionados = Archivos.leerArchivo("aficionados.txt");
+    ArrayList<String> lineasOrganizadores = Archivos.leerArchivo("organizadores.txt");
     this.partidos = Partido.cargarpartidos("partidos.txt");
     // 2. Recorremos las líneas de usuarios saltando la cabecera
     for (int i = 1; i < lineasUsuarios.size(); i++) {
@@ -210,7 +211,7 @@ private void cargarUsuariosDesdeArchivo() {
                 if (datosAficionado[0].equals(codigoUnico)) {
                     celular = datosAficionado[4];      // Índice del celular
                     paisFavorito = datosAficionado[5]; // Índice del país favorito
-                    break; // Salimos del bucle interno al encontrar la coincidencia
+                    break; 
                 }
             }
             
@@ -218,7 +219,6 @@ private void cargarUsuariosDesdeArchivo() {
             this.usuarios.add(aficionado); 
             
         } else if (rol == Rol.O) {
-            // Buscamos los datos en la lista de organizadores que YA tenemos en memoria
             String empresa = "No asignada";
             String cargo = "No asignado";
 
@@ -227,7 +227,7 @@ private void cargarUsuariosDesdeArchivo() {
                 if (datosOrganizador[0].equals(codigoUnico)) {
                     empresa = datosOrganizador[4]; // Índice de la empresa
                     cargo = datosOrganizador[5];   // Índice del cargo
-                    break; // Salimos del bucle interno al encontrar la coincidencia
+                    break; 
                 }
             }
             
@@ -238,7 +238,7 @@ private void cargarUsuariosDesdeArchivo() {
 } 
 
 public void cargarKitsDesdeArchivo() {
-    ArrayList<String> lineas = Archivos.cargarKits("kits.txt");
+    ArrayList<String> lineas = Archivos.leerArchivo("kits.txt");
     
     // Saltamos la cabecera (si la tiene, empieza en 1)
     for (int i = 1; i < lineas.size(); i++) {
@@ -253,9 +253,37 @@ public void cargarKitsDesdeArchivo() {
         this.kits.add(k);
     }
 }
-
-
-
+// En Sistema.java, dentro de los métodos de carga:
+public void cargarComprasDesdeArchivo() {
+    // Usamos tu método de lectura (el genérico)
+    ArrayList<String> lineas = Archivos.leerArchivo("compras.txt"); // O tu método unificado
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    
+    for (int i = 0; i < lineas.size(); i++) {
+        try {
+            String[] datos = lineas.get(i).split("\\|");
+            
+            // Aquí usamos el SEGUNDO constructor (el que sincroniza el contador)
+            Compra compraCargada = new Compra(
+                datos[0], // Código existente (ej. C001)
+                datos[1], // Tipo
+                datos[2], // Referencia
+                sdf.parse(datos[3]), // Fecha
+                Integer.parseInt(datos[4]), // Cantidad
+                Double.parseDouble(datos[5]), // Valor
+                datos[6] // Código Aficionado
+            );
+            this.compras.add(compraCargada);
+        } catch (Exception e) {
+            // Ignora líneas vacías o cabeceras que puedan fallar
+        }
+    }
 }
+        
+    
+}
+
+
+
     
 

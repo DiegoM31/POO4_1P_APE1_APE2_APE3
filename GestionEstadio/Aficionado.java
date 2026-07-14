@@ -121,6 +121,7 @@ public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
         System.out.println("Pago exitoso. Gracias por su compra.");
         Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
         sistema.getCompras().add(c1Compra);
+        Archivos.guardarLinea("compras.txt", c1Compra.formatToLineaArchivo()); 
         Sistema.notificar(this, c1Compra);
         } else {
         System.out.println("Stock insuficiente o cantidad no válida.");
@@ -159,13 +160,16 @@ public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
         if (cantidad > 0 && cantidad <= kitSeleccionado.getDisponibles()) {
             double total = cantidad * kitSeleccionado.getPrecio();
             kitSeleccionado.setDisponibles(kitSeleccionado.getDisponibles() - cantidad);
+            
             System.out.println("Total a pagar: $" + total);
             System.out.println("Ingrese número de tarjeta:");
             String tarjeta = sc.nextLine();
-            System.out.println("Pago exitoso. Gracias por su compra.");
+            System.out.println("Procesando compra...");
             Compra c1Compra = new Compra("KIT", kitSeleccionado.getNombre(), new Date(), cantidad, total, this.getCodigoUnico());
             sistema.getCompras().add(c1Compra);
+            Archivos.guardarLinea("compras.txt", c1Compra.formatToLineaArchivo()); 
             Sistema.notificar(this, c1Compra, kitSeleccionado);
+            System.out.println("Pago exitoso. Gracias por su compra.");
         } else {
             System.out.println("Stock insuficiente o cantidad no válida.");
         }
