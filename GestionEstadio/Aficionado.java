@@ -51,75 +51,36 @@ public class Aficionado extends Usuario {
             System.out.println("Fase: " + p.getFase());
 
             System.out.println("Zonas disponibles:");
-            System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $"  );
-            System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" );
-            System.out.println("- VIP          | Disponibles: " + p.getentradasVIP() + " | Precio: $" );
+            System.out.println("- GENERAL      | Dis ponibles: " + p.getEntradasGeneral() + " | Precio: $" + p.getPrecioGeneral());
+            System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getPrecioPreferencial());
+            System.out.println("- VIP          | Disponibles: " + p.getEntradasVIP() + " | Precio: $" + p.getPrecioVIP());
             System.out.println("--------------------------------------------------");
         }
     }
 
-    public void COMPRAR(ArrayList<Partido> listaPartidos, ArrayList<Compra> listaCompras, Scanner sc){
-
-    System.out.println("Ingrese el código del partido:");
-    String codPartido = sc.nextLine();
+    // Dentro de Aficionado.java, reemplaza tu método actual por esta estructura
+public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
+    System.out.println("Seleccione el código del partido:");
+    String codSeleccionado = sc.nextLine();
     
-    Partido p = null;
-    for (Partido part : listaPartidos) {
-        if (part.getCodigo().equalsIgnoreCase(codPartido)) {
-            p = part;
+    // 2. Buscar el objeto Partido en tu ArrayList 'partidos'
+    Partido pElegido = null;
+    for (Partido p : partidos) {
+        if (p.getCodigo().equalsIgnoreCase(codSeleccionado)) {
+            pElegido = p;
             break;
         }
     }
-    
-    if (p == null) {
+    if (pElegido == null) {
         System.out.println("Partido no encontrado.");
         return;
     }
+    System.out.println("Elija la zona: 1. General, 2. Preferencial, 3. VIP");
+    int opcion = Integer.parseInt(sc.nextLine());
 
-    System.out.println("Elija la zona (a. GENERAL, b. PREFERENCIAL, c. VIP):");
-    String opcionZona = sc.nextLine().toLowerCase();
-    int stockDisponible = 0;
-    double precioUnitario = 0.0;
+    double precio = 0;
     String nombreZona = "";
-
-    if (opcionZona.equals("a")) {
-        stockDisponible = p.getEntradasGeneral();
-        nombreZona = "GENERAL";
-        precioUnitario = 45.00; //Precio de ejemplo
-    } else if (opcionZona.equals("b")) {
-        stockDisponible = p.getEntradasPreferencial();
-        nombreZona = "PREFERENCIAL";
-        precioUnitario = 85.00; //Precio de ejemplo
-    } else if (opcionZona.equals("c")) {
-        stockDisponible = p.getentradasVIP();
-        nombreZona = "VIP";
-        precioUnitario = 150.00; //Precio de 
-    }
-
-    System.out.println("Ingrese la cantidad de entradas (Disponibles: " + stockDisponible + "):");
-    int cantidad = Integer.parseInt(sc.nextLine());
-
-    if (cantidad > stockDisponible) {
-        System.out.println("Stock insuficiente.");
-        return;
-    }
-
-    double total = cantidad * precioUnitario;
-    System.out.println("Total a pagar: $" + total);
-
-    System.out.println("Ingrese número de tarjeta:");
-    sc.nextLine(); 
-    System.out.println("Pago exitoso. Gracias por su compra.");
-
-    Compra nuevaCompra = new Compra("ENTRADA", p.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
-    listaCompras.add(nuevaCompra);
-    Archivos.guardarCompra(nuevaCompra);
-
-    if (nombreZona.equals("GENERAL")) p.setEntradasGeneral(stockDisponible - cantidad);
-    else if (nombreZona.equals("PREFERENCIAL")) p.setEntradasPreferencial(stockDisponible - cantidad);
-    else p.setEntradasVIP(stockDisponible - cantidad);
-
-    System.out.println("Se ha enviado una notificación a su correo electrónico.");
+    int stockDisponible = 0;
 
     switch (opcion) {
         case 1:
