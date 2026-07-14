@@ -2,6 +2,7 @@ package GestionEstadio;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class Compra {
     private static int contadorCompras=0;
     private String codigoCompra;
@@ -75,14 +76,12 @@ public class Compra {
         this.codigoAficionado=codigoAficionado;
     }
     public String formatToLineaArchivo() {
-        SimpleDateFormat sdf = new SimpleDateFormat("Dia/Mes/Anio");
-        String fechaFormateada = sdf.format(this.fechacompra);
-        return this.codigoCompra + "|" + this.tipo + "|" + this.codigoReferencia + "|" + 
-               fechaFormateada + "|" + this.cantidad + "|" + this.valorPagado + "|" + this.codigoAficionado;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + sdf.format(fechacompra) + "|" + cantidad + "|" + valorPagado + "|" + codigoAficionado;
     }
     @Override
     public String toString(){
-        SimpleDateFormat sdf = new SimpleDateFormat("Dia/Mes/Anio HH:mm");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return "--------------------"+"\n"+
         "Compra: "+ codigoCompra+" ["+tipo+"] "+"\n"+
         "Ref: "+codigoReferencia+"\n"+
