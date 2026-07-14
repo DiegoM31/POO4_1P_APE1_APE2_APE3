@@ -1,13 +1,7 @@
 package GestionEstadio;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.io.BufferedReader;
-import java.io.BufferedWriter; // <- Necesario
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;     // <- Necesario
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+
 
 public class Compra {
     private static int contadorCompras=0;

@@ -27,6 +27,7 @@ public class Sistema {
         this.sc = new Scanner(System.in);
         cargarUsuariosDesdeArchivo();
         cargarKitsDesdeArchivo();
+        cargarComprasDesdeArchivo();
     }
 
     public ArrayList<Compra> getCompras() {
