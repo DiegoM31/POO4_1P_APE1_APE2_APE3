@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Scanner;
 import GestionEstadio.Compra;
 
+
 public class Aficionado extends Usuario {
     private String celular;
     private String paisFavorito;
@@ -28,7 +29,7 @@ public class Aficionado extends Usuario {
             "1. Consultar partidos \r\n" + //
             "2. Comprar entrada \r\n" + //
             "3. Comprar kit de entradas \r\n" + //
-            "4. Consultar entradas \r\n" + //
+            "4. Consultar compras \r\n" + //
             "5. Salir \r\n"); //
             Scanner sc = new Scanner(System.in);
             System.out.print("Seleccione una opción: ");
@@ -59,7 +60,7 @@ public class Aficionado extends Usuario {
     }
 
     // Dentro de Aficionado.java, reemplaza tu método actual por esta estructura
-public void comprarEntrada(ArrayList<Partido> partidos) {
+public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
     System.out.println("Seleccione el código del partido:");
     String codSeleccionado = sc.nextLine();
     
@@ -82,7 +83,6 @@ public void comprarEntrada(ArrayList<Partido> partidos) {
     String nombreZona = "";
     int stockDisponible = 0;
 
-    // Asignación dependiendo de la opción elegida
     switch (opcion) {
         case 1:
             precio = pElegido.getPrecioGeneral();
@@ -115,6 +115,7 @@ public void comprarEntrada(ArrayList<Partido> partidos) {
         String tarjeta = sc.nextLine();
         System.out.println("Pago exitoso. Gracias por su compra.");
         Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
+        sistema.getCompras().add(c1Compra);
         Sistema.notificar(this, c1Compra);
         } else {
         System.out.println("Stock insuficiente o cantidad no válida.");
@@ -128,31 +129,45 @@ public void comprarEntrada(ArrayList<Partido> partidos) {
     public void comprarKit(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos, Sistema sistema) {
     System.out.println("===== KITS DISPONIBLES =====");
     for (int i = 0; i < listaKits.size(); i++) {
-        System.out.println((i + 1) + ". " + listaKits.get(i).toString());
+        Kit k = listaKits.get(i);
+     
+        System.out.println((i + 1) + ". " + k.getNombre());
+        System.out.println("Incluye:");
+    
+        for (String codPartido : k.getPartidosIncluidos()) {
+            Partido p = buscarPartido(listaPartidos, codPartido);
+            if (p != null) {
+                System.out.println("- " + p.getSeleccionLocal() + " vs " + p.getSeleccionVisitante() + " (" + p.getCodigo() + ")");
+            }
+        }
+
+        System.out.println("Precio: $" + k.getPrecio());
+        System.out.println("Disponibles: " + k.getDisponibles());
+        System.out.println("---------------------------");
     }
-
-    System.out.print("Seleccione el número de kit que desea comprar: ");
-    int seleccion = sc.nextInt() - 1;
-
-    if (seleccion >= 0 && seleccion < listaKits.size()) {
-        Kit kitSeleccionado = listaKits.get(seleccion);
-
-        if (kitSeleccionado.getDisponibles() > 0) {
-           
-            Compra nuevaCompra = new Compra("KIT", kitSeleccionado.getCodigo(), new java.util.Date(), 1, kitSeleccionado.getPrecio(), this.codigoUnico);
-            
-            kitSeleccionado.setDisponibles(kitSeleccionado.getDisponibles() - 1);
-            
-            System.out.println("¡Compra de kit exitosa!");
-
-            Sistema.notificar(this, nuevaCompra, kitSeleccionado);
-            
+    System.out.println("Seleccione el número del kit que desea comprar:");
+    int opcion = Integer.parseInt(sc.nextLine());
+    if (opcion >= 1 && opcion <= listaKits.size()) {
+        Kit kitSeleccionado = listaKits.get(opcion - 1);
+        System.out.println("Ingrese cantidad:");
+        int cantidad = Integer.parseInt(sc.nextLine());
+        if (cantidad > 0 && cantidad <= kitSeleccionado.getDisponibles()) {
+            double total = cantidad * kitSeleccionado.getPrecio();
+            kitSeleccionado.setDisponibles(kitSeleccionado.getDisponibles() - cantidad);
+            System.out.println("Total a pagar: $" + total);
+            System.out.println("Ingrese número de tarjeta:");
+            String tarjeta = sc.nextLine();
+            System.out.println("Pago exitoso. Gracias por su compra.");
+            Compra c1Compra = new Compra("KIT", kitSeleccionado.getNombre(), new Date(), cantidad, total, this.getCodigoUnico());
+            sistema.getCompras().add(c1Compra);
+            Sistema.notificar(this, c1Compra, kitSeleccionado);
         } else {
-            System.out.println("Lo sentimos, este kit ya no tiene stock.");
+            System.out.println("Stock insuficiente o cantidad no válida.");
         }
     } else {
-        System.out.println("Opción no válida.");
+        System.out.println("Opción inválida.");
     }
+
 }
 
     @Override

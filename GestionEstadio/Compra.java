@@ -82,8 +82,7 @@ public class Compra {
     }
     @Override
     public String toString(){
-        // Cambia esto:
-SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return "--------------------"+"\n"+
         "Compra: "+ codigoCompra+" ["+tipo+"] "+"\n"+
         "Ref: "+codigoReferencia+"\n"+

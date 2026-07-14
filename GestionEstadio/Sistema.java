@@ -4,6 +4,8 @@ import GestionEstadio.Aficionado;
 import GestionEstadio.Organizador;  
 import GestionEstadio.Usuario;
 
+import GestionEstadio.Partido;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -23,6 +25,11 @@ public class Sistema {
         this.compras = new ArrayList<>();
         this.sc = new Scanner(System.in);
         cargarUsuariosDesdeArchivo();
+        cargarKitsDesdeArchivo();
+    }
+
+    public ArrayList<Compra> getCompras() {
+        return compras;
     }
 
     public static void main(String[] args) {
@@ -34,84 +41,89 @@ public class Sistema {
 
 
 
-    public void iniciarSecion() {
+public void iniciarSecion() {
+    // Este bucle mantiene el sistema encendido pidiendo nuevos logins
+    boolean sistemaActivo = true;
+
+    while (sistemaActivo) {
         System.out.println("\n\n\n\n\n");
-        System.out.println("---- Iniciar Sesión --");
+        System.out.println("---- Iniciar Sesión ----");
         System.out.println("Ingrese su usuario:");
         String usuarioI = sc.nextLine();
         System.out.println("Ingrese su contraseña:");
         String contraseñaI = sc.nextLine();
+        
         boolean usuarioEncontrado = false;
+        
         for (Usuario u : this.usuarios) {
             if (u.getUsuario().equals(usuarioI) && u.getContraseña().equals(contraseñaI)) {
                 usuarioEncontrado = true;
                 System.out.println("¡Inicio de sesión exitoso!");
                 
-
-
                 Rol rol = u.getRol();
+                boolean sesionActiva = true;
+
                 if (rol == Rol.A) {
                     System.out.println("Su rol es: Aficionado.");
                     System.out.println("Bienvenido/a " + u.getNombre() + " " + u.getApellido());
-                    Aficionado a1 =(Aficionado) u; // Downcasting de Usuario a Aficionado
+                    Aficionado a1 = (Aficionado) u;
                     System.out.println("Su numero de celular es: " + a1.getCelular());
-                    System.out.println("¿Este número de celular es correcto? (S/N): S para sí, N para no: ");
-                    String Celular= sc.nextLine();
+                    System.out.print("¿Este número de celular es correcto? (S/N): ");
+                    String confirmacion = sc.nextLine();
 
-
-
-                    if(Celular.equals("S")){
-                        int opcion = 0;
-                    // Bucle que mantiene el menú activo
-                    while (opcion != 5) { // Suponiendo que 5 es Salir
-                        opcion = a1.mostrarMenu(); // Esto imprime el menú y pide la opción
-            
-                         switch (opcion) {
-                    case 1:
-                        a1.consultarPartidos(partidos); // llama a consultarPartidos()
-                        break;
-                    case 2:
-                        a1.comprarEntrada(partidos); // llama a comprarEntrada()
-                        break;
-                    case 3:
-                        a1.comprarKit(kits, partidos, this); // llama a comprarKit()
-                        break;
-                    case 4:
-                        a1.consultarEntrada(compras);// llama a consultarEntradas()
-                        break;
-                    case 5:
-                        System.out.println("Saliendo del sistema...");
-                        break;
-                    default:
-                        System.out.println("Opción no válida");
+                    if (confirmacion.equalsIgnoreCase("S")) {
+                        while (sesionActiva) {
+                            int opcion = a1.mostrarMenu();
+                            switch (opcion) {
+                                case 1: a1.consultarPartidos(partidos); break;
+                                case 2: a1.comprarEntrada(partidos, this); break;
+                                case 3: a1.comprarKit(kits, partidos, this); break;
+                                case 4: a1.consultarEntrada(compras); break;
+                                case 5: 
+                                    System.out.println("Cerrando sesión...");
+                                    sesionActiva = false; // Rompe el while del menú
+                                    break;
+                                default: System.out.println("Opción no válida");
+                            }
                         }
                     }
+
                 } else if (rol == Rol.O) {
                     System.out.println("Su rol es: Organizador.");
                     System.out.println("Bienvenido/a " + u.getNombre() + " " + u.getApellido());
-                    Organizador o1 =(Organizador) u; // Downcasting de Usuario a Organizador
+                    Organizador o1 = (Organizador) u;
                     System.out.println("Empresa asignada: " + o1.getEmpresa());
                     System.out.print("¿Esta empresa es correcta? (S/N): ");
-                    String Empresa= sc.nextLine();
-                    if(Empresa.equals("S")){
-                        o1.mostrarMenu();
-                    String opcion = sc.nextLine();
+                    String confirmacion = sc.nextLine();
+                    
+                    if (confirmacion.equalsIgnoreCase("S")) {
+                        while (sesionActiva) {
+                            int opcion = o1.mostrarMenu();
+                            switch (opcion) {
+                                case 1: o1.consultarEntrada(compras); break;
+                                case 2: o1.generarReporte(compras); break;
+                                case 3: 
+                                    System.out.println("Cerrando sesión...");
+                                    sesionActiva = false; // Rompe el while del menú
+                                    break;
+                                default: System.out.println("Opción no válida");
+                            }
+                        }
                     } else {
-                        System.out.println("Verificación fallida.   \r\n" + //
-                                            "Por motivos de seguridad se cerrará la sesión. \r\n" + //
-                                            "Saliendo del sistema... ");
-
+                        System.out.println("Verificación fallida. Cerrando sesión...");
                     }
-                break; // Salimos del método si encontramos al usuario
-            } 
-            
-        }
-        }
-        }
-        if(!usuarioEncontrado) {
-            System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
+                }
+                break; // Sale del for de búsqueda de usuarios una vez logueado
             }
+        }
+        
+        if (!usuarioEncontrado) {
+            System.out.println("Usuario o contraseña incorrectos. Intente nuevamente.");
+        }
     }
+}
+
+ 
 
 
 
@@ -122,28 +134,29 @@ public class Sistema {
 
     public static void notificar(Aficionado a, Compra c) {
         if (c == null) {
-            System.out.println("Error: No se pudo realizar la notificación porque la compra no existe (es nula).");
+            System.out.println("\nError: No se pudo realizar la notificación porque la compra no existe (es nula).");
             return;
         }
 
-        System.out.println("De: correoSistema");
+        System.out.println("\n\nDe: correoSistema");
         System.out.println("Para: " + a.getCorreo());
         System.out.println("Asunto: Compra de entrada realizada");
         System.out.println("Estimado/a " + a.getNombre() + " " + a.getApellido() + ",");
         
         System.out.println("Su compra ha sido registrada exitosamente con el código " + c.getCodigoCompra());
-        System.out.println("Gracias por adquirir sus entradas.");
+        System.out.println("Gracias por adquirir sus entradas.\n\n");
+        
     }
 
     public static void notificar(Aficionado a, Compra c, Kit k) {
         if (c == null || k == null) {
-            System.out.println("Error: No se puede notificar, datos de compra o kit incompletos.");
+            System.out.println("\nError: No se puede notificar, datos de compra o kit incompletos.");
             return;
         }
 
-        System.out.println("Asunto: Compra de kit realizada");
+        System.out.println("\n\nAsunto: Compra de kit realizada");
         System.out.println("Hola " + a.getNombre() + ", has adquirido el kit: " + k.getNombre());
-        System.out.println("Total pagado: $" + c.getValorPagado());
+        System.out.println("Total pagado: $" + c.getValorPagado()+"\n\n");
     }
 
 
@@ -155,11 +168,8 @@ public class Sistema {
         System.out.println("Se ha generado el reporte de compras del sistema.");
         System.out.println("Total de compras: " + totalCompras);
         System.out.println("Entradas: " + totalEntradas + " | Kits: " + totalKits);
-        System.out.println("Monto total recaudado: $" + String.format("%.2f", montoTotal+"\n\n"));
+        System.out.println("Monto total recaudado: $" + String.format("%.2f", montoTotal)+"\n\n");
     }
-
-
-
 
 
 
@@ -176,7 +186,6 @@ private void cargarUsuariosDesdeArchivo() {
     ArrayList<String> lineasAficionados = Archivos.cargarUsuarios("aficionados.txt");
     ArrayList<String> lineasOrganizadores = Archivos.cargarUsuarios("organizadores.txt");
     this.partidos = Partido.cargarpartidos("partidos.txt");
-
     // 2. Recorremos las líneas de usuarios saltando la cabecera
     for (int i = 1; i < lineasUsuarios.size(); i++) {
         String linea = lineasUsuarios.get(i);
@@ -244,6 +253,9 @@ public void cargarKitsDesdeArchivo() {
         this.kits.add(k);
     }
 }
+
+
+
 }
     
 
