@@ -41,7 +41,8 @@ public class Organizador extends Usuario {
     public int mostrarMenu() {
                 System.out.println("Menú de Organizador: \r\n" + //
                                     "1. Generar reporte de ventas \r\n" + //
-                                    "2. Salir \r\n" + //
+                                    "2. Reporte de compras \r\n" + //
+                                    "3. Salir \r\n" + //
                                     "Seleccione una opción: ");
         Scanner sc = new Scanner(System.in);
         int opcion = sc.nextInt();

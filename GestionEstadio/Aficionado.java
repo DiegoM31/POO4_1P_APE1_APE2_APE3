@@ -3,7 +3,7 @@ package GestionEstadio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import GestionEstadio.Compra;
+
 
 
 public class Aficionado extends Usuario {
@@ -55,7 +55,6 @@ public class Aficionado extends Usuario {
             System.out.println("- PREFERENCIAL | Disponibles: " + p.getEntradasPreferencial() + " | Precio: $" + p.getPrecioPreferencial());
             System.out.println("- VIP          | Disponibles: " + p.getEntradasVIP() + " | Precio: $" + p.getPrecioVIP());
             System.out.println("--------------------------------------------------");
-            contador++;
         }
     }
 
@@ -109,7 +108,13 @@ public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
 
     if (cantidad > 0 && cantidad <= stockDisponible) {
         double total = cantidad * precio;
-        pElegido.setEntradasGeneral(pElegido.getEntradasGeneral() - cantidad);
+        if (nombreZona.equals("General")) {
+            pElegido.setEntradasGeneral(stockDisponible - cantidad);
+        } else if (nombreZona.equals("Preferencial")) {
+            pElegido.setEntradasPreferencial(stockDisponible - cantidad);
+        } else if (nombreZona.equals("VIP")) {
+            pElegido.setEntradasVIP(stockDisponible - cantidad);
+        }
         System.out.println("Total a pagar: $" + total);
         System.out.println("Ingrese número de tarjeta:");
         String tarjeta = sc.nextLine();
