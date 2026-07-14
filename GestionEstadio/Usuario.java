@@ -83,8 +83,9 @@ public abstract class Usuario {
     public abstract void consultarEntrada(ArrayList<Compra> listaTotal);
 
 
-    public void mostrarMenu() {
+    public int mostrarMenu() {
         System.out.println("Menú de opciones:");
+        return 0;
     }
 
 
