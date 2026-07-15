@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
     public class Archivos {
 
-    // ESTE ÚNICO MÉTODO REEMPLAZA A LOS TRES
     public static ArrayList<String> leerArchivo(String nombrearchivo) {
         ArrayList<String> lineas = new ArrayList<>();
         File archivo = null;
