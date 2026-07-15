@@ -157,7 +157,7 @@ public class Partido {
     return partidos;
 }
 
-// Agrega este método dentro de tu clase Partido.java
+// Implementacion del toString:
     @Override
     public String toString() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
