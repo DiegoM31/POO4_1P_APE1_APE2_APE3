@@ -2,6 +2,7 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "javax.mail-1.6.2.jar",
-        "PROYECTO POO FINAL/lib/javax.mail-1.6.2.jar"
+        "PROYECTO POO FINAL/lib/javax.mail-1.6.2.jar",
+        "PROYECTO POO FINAL/lib/activation-1.1.jar"
     ]
 }

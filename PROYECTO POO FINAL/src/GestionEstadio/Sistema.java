@@ -4,9 +4,6 @@ package GestionEstadio;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,7 +57,7 @@ public void iniciarSecion() {
         boolean usuarioEncontrado = false;
         
         for (Usuario u : this.usuarios) {
-            if (u.getUsuario().equals(usuarioI) && u.getContraseña().equals(contraseñaI)) {
+            if (u.getUsuario().trim().equals(usuarioI.trim()) && u.getContraseña().trim().equals(contraseñaI.trim())) {
                 usuarioEncontrado = true;
                 System.out.println("¡Inicio de sesión exitoso!");
                 
@@ -176,7 +173,8 @@ public static void notificar(Organizador o, int totalCompras, int totalEntradas,
 
 private void cargarUsuariosDesdeArchivo() {
     // 1. Cargamos cada archivo UNA SOLA VEZ en memoria RAM al iniciar el método
-    ArrayList<String> lineasUsuarios = Archivos.leerArchivo("usuarios.txt");
+    // Cambia esto temporalmente para probar:
+ArrayList<String> lineasUsuarios = Archivos.leerArchivo("usuarios.txt");
     ArrayList<String> lineasAficionados = Archivos.leerArchivo("aficionados.txt");
     ArrayList<String> lineasOrganizadores = Archivos.leerArchivo("organizadores.txt");
     this.partidos = Partido.cargarpartidos("partidos.txt");
@@ -192,7 +190,7 @@ private void cargarUsuariosDesdeArchivo() {
         String usuario = datos[4];       
         String contraseña = datos[5];       
         String correo = datos[6];
-        Rol rol = Rol.valueOf(datos[7].trim());  
+        Rol rol = Rol.valueOf(datos[7].trim().toUpperCase());  
         
         if (rol == Rol.A) {
             // Buscamos los datos en la lista de aficionados que YA tenemos en memoria
@@ -275,8 +273,8 @@ public void cargarComprasDesdeArchivo() {
 
 public static void enviarCorreo(String destinatario, String asunto, String cuerpoMensaje) {
     // 1. Configuración de tu cuenta
-    String remitente = "tu_correo@gmail.com"; 
-    String contraseña = "qmwq xdyg tjwx pugk"; // La clave de aplicación de Google
+    String remitente = "prodiegoplay@gmail.com";
+    String contraseña = "wwhf mraz moxy hwfg"; // La clave de aplicación de Google
 
     // 2. Propiedades del servidor SMTP
     Properties props = new Properties();
@@ -285,6 +283,7 @@ public static void enviarCorreo(String destinatario, String asunto, String cuerp
     props.put("mail.smtp.host", "smtp.gmail.com");
     props.put("mail.smtp.port", "587");
 
+    props.put("mail.smtp.ssl.trust", "*");
     // 3. Autenticación
     Session session = Session.getInstance(props, new Authenticator() {
         protected PasswordAuthentication getPasswordAuthentication() {

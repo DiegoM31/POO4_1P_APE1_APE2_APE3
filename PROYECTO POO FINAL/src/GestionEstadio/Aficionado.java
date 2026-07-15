@@ -62,8 +62,6 @@ public class Aficionado extends Usuario {
 public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
     System.out.println("Seleccione el código del partido:");
     String codSeleccionado = sc.nextLine();
-    
-    // 2. Buscar el objeto Partido en tu ArrayList 'partidos'
     Partido pElegido = null;
     for (Partido p : partidos) {
         if (p.getCodigo().equalsIgnoreCase(codSeleccionado)) {
@@ -178,6 +176,7 @@ public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
     }
 
 }
+
 
     @Override
     public void consultarEntrada(ArrayList<Compra> listaTotal){
