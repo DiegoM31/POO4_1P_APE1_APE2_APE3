@@ -1,14 +1,16 @@
 package GestionEstadio;
 
-import GestionEstadio.Aficionado;
-import GestionEstadio.Organizador;  
-import GestionEstadio.Usuario;
 
-import GestionEstadio.Partido;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
 
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 
 public class Sistema {
     private  ArrayList<Usuario> usuarios;
@@ -127,51 +129,41 @@ public void iniciarSecion() {
 
  
 
+public static void notificar(Aficionado a, Compra c) {
+    if (c == null) return;
 
+    String asunto = "Compra de entrada realizada";
+    String cuerpo = "Estimado/a " + a.getNombre() + " " + a.getApellido() + ",\n\n" +
+                    "Su compra ha sido registrada exitosamente con el código " + c.getCodigoCompra() + "\n" +
+                    "Gracias por adquirir sus entradas.";
 
+    enviarCorreo(a.getCorreo(), asunto, cuerpo);
+}
 
+// Notificación para Aficionado (Compra de kit)
+public static void notificar(Aficionado a, Compra c, Kit k) {
+    if (c == null || k == null) return;
 
+    String asunto = "Compra de kit realizada";
+    String cuerpo = "Hola " + a.getNombre() + ",\n\n" +
+                    "Has adquirido el kit: " + k.getNombre() + "\n" +
+                    "Total pagado: $" + c.getValorPagado();
 
+    enviarCorreo(a.getCorreo(), asunto, cuerpo);
+}
 
-
-    public static void notificar(Aficionado a, Compra c) {
-        if (c == null) {
-            System.out.println("\nError: No se pudo realizar la notificación porque la compra no existe (es nula).");
-            return;
-        }
-
-        System.out.println("\n\nDe: correoSistema");
-        System.out.println("Para: " + a.getCorreo());
-        System.out.println("Asunto: Compra de entrada realizada");
-        System.out.println("Estimado/a " + a.getNombre() + " " + a.getApellido() + ",");
-        
-        System.out.println("Su compra ha sido registrada exitosamente con el código " + c.getCodigoCompra());
-        System.out.println("Gracias por adquirir sus entradas.\n\n");
-        
-    }
-
-    public static void notificar(Aficionado a, Compra c, Kit k) {
-        if (c == null || k == null) {
-            System.out.println("\nError: No se puede notificar, datos de compra o kit incompletos.");
-            return;
-        }
-
-        System.out.println("\n\nAsunto: Compra de kit realizada");
-        System.out.println("Hola " + a.getNombre() + ", has adquirido el kit: " + k.getNombre());
-        System.out.println("Total pagado: $" + c.getValorPagado()+"\n\n");
-    }
-
-
-    public static void notificar(Organizador o, int totalCompras, int totalEntradas, int totalKits, double montoTotal) {
-        System.out.println("\n\nDe: correoSistema");
-        System.out.println("Para: " + o.getCorreo());
-        System.out.println("Asunto: Reporte de compras registradas");
-        System.out.println("Estimado/a " + o.getNombre() + ",");
-        System.out.println("Se ha generado el reporte de compras del sistema.");
-        System.out.println("Total de compras: " + totalCompras);
-        System.out.println("Entradas: " + totalEntradas + " | Kits: " + totalKits);
-        System.out.println("Monto total recaudado: $" + String.format("%.2f", montoTotal)+"\n\n");
-    }
+// Notificación para Organizador (Reporte a tu correo personal)
+public static void notificar(Organizador o, int totalCompras, int totalEntradas, int totalKits, double montoTotal) {
+    String asunto = "Reporte de compras registradas";
+    String cuerpo = "Estimado/a " + o.getNombre() + ",\n\n" +
+                    "Se ha generado el reporte de compras del sistema.\n" +
+                    "Total de compras: " + totalCompras + "\n" +
+                    "Entradas: " + totalEntradas + " | Kits: " + totalKits + "\n" +
+                    "Monto total recaudado: $" + String.format("%.2f", montoTotal);
+    
+    // Enviamos el reporte a tu correo personal
+    enviarCorreo("diegomaldonadozalamea@gmail.com", asunto, cuerpo);
+}
 
 
 
@@ -280,11 +272,41 @@ public void cargarComprasDesdeArchivo() {
         }
     }
 }
-        
-    
+
+public static void enviarCorreo(String destinatario, String asunto, String cuerpoMensaje) {
+    // 1. Configuración de tu cuenta
+    String remitente = "tu_correo@gmail.com"; 
+    String contraseña = "qmwq xdyg tjwx pugk"; // La clave de aplicación de Google
+
+    // 2. Propiedades del servidor SMTP
+    Properties props = new Properties();
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.host", "smtp.gmail.com");
+    props.put("mail.smtp.port", "587");
+
+    // 3. Autenticación
+    Session session = Session.getInstance(props, new Authenticator() {
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(remitente, contraseña);
+        }
+    });
+    try {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(remitente));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+        message.setSubject(asunto);
+        message.setText(cuerpoMensaje);
+
+        Transport.send(message);
+        System.out.println("Correo enviado exitosamente a: " + destinatario);
+
+    } catch (MessagingException e) {
+        // Si ocurre algún error (ej. internet caído), entra aquí
+        System.out.println("Error al enviar el correo: " + e.getMessage());
+        e.printStackTrace(); // Esto te imprime detalles técnicos si algo sale mal
+    }
 }
-
-
-
-    
+    }
+        
 
