@@ -121,7 +121,7 @@ public class Partido {
     }
 
 
-    /*crea un arraylist */
+    /*crea un arraylist de partidos con los objetos partido*/
     public static ArrayList<Partido> cargarpartidos(String archivo){
         ArrayList<Partido> partidos = new ArrayList<>();
 
@@ -161,7 +161,7 @@ public class Partido {
     return partidos;
 }
 
-// Implementacion del toString:
+    /*Implementacion del toString*/
     @Override
     public String toString() {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -169,4 +169,18 @@ public class Partido {
            " | " + seleccionLocal + " vs " + seleccionVisitante + 
            " | Fecha: " + sdf.format(fecha);
     }
+    public String formatToLineaArchivo() {
+    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+    return this.codigo + "|" + 
+           this.seleccionLocal + "|" + 
+           this.seleccionVisitante + "|" + 
+           formato.format(this.fecha) + "|" + 
+           this.estadio + "|" + 
+           this.ciudad + "|" + 
+           this.capacidad + "|" + 
+           this.entradasGeneral + "|" + 
+           this.entradasPreferencial + "|" + 
+           this.entradasVIP + "|" + 
+           this.fase;
+}
 }

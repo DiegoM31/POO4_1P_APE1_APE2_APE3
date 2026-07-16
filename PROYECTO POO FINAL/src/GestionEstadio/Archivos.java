@@ -51,7 +51,18 @@ import java.util.ArrayList;
         } catch (Exception e) {
             System.out.println("Error al escribir en el archivo: " + e.getMessage());
         }
-    }   
+    }  
+
+    public static void sobrescribirArchivo(String nombrearchivo, ArrayList<String> lineas) {
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombrearchivo, false))) {
+        for (String linea : lineas) {
+            bw.write(linea);
+            bw.newLine();
+        }
+    } catch (Exception e) {
+        System.out.println("Error al actualizar el archivo " + nombrearchivo + ": " + e.getMessage());
+    }
+} 
 }        
 
 

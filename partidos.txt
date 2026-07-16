@@ -18,7 +18,7 @@ M016|Ganador Grupo G|Segundo Grupo H|2026-07-02|AT&T Stadium|Dallas|80000|32000|
 M017|Ganador Cuarto 1|Ganador Cuarto 2|2026-07-08|MetLife|New York|85000|35000|12000|3000|Semifinal
 M018|Ganador Cuarto 3|Ganador Cuarto 4|2026-07-09|SoFi Stadium|Los Angeles|70000|28000|9000|1800|Semifinal
 M019|Perdedor Semi 1|Perdedor Semi 2|2026-07-12|Hard Rock Stadium|Miami|65000|25000|8000|1500|Tercer lugar
-M020|Ganador Semi 1|Ganador Semi 2|2026-07-15|MetLife|New York|85000|35000|12000|3000|Final
+M020|Ganador Semi 1|Ganador Semi 2|2026-07-15|MetLife|New York|85000|35000|11977|3000|Final
 M021|Italia|Uruguay|2026-06-17|BC Place|Vancouver|54000|20000|7000|1200|Fase de grupos
 M022|Belgica|Estados Unidos|2026-06-17|BMO Field|Toronto|45000|18000|6000|1000|Fase de grupos
 M023|Paises Bajos|Colombia|2026-06-18|Estadio Akron|Guadalajara|49000|19000|6500|1200|Fase de grupos

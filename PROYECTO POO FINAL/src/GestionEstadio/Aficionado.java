@@ -135,6 +135,7 @@ public class Aficionado extends Usuario {
             String tarjeta = sc.nextLine();
             System.out.println("Pago exitoso. Gracias por su compra.");
             Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
+            sistema.guardarPartidosEnArchivo();
             sistema.getCompras().add(c1Compra);
             Archivos.guardarLinea("compras.txt", c1Compra.formatToLineaArchivo()); 
             Sistema.notificar(this, c1Compra);
@@ -180,6 +181,7 @@ public class Aficionado extends Usuario {
             String tarjeta = sc.nextLine();
             System.out.println("Procesando compra...");
             Compra c1Compra = new Compra("KIT", kitSeleccionado.getNombre(), new Date(), cantidad, total, this.getCodigoUnico());
+            sistema.cargarKitsDesdeArchivo();
             sistema.getCompras().add(c1Compra);
             Archivos.guardarLinea("compras.txt", c1Compra.formatToLineaArchivo()); 
             Sistema.notificar(this, c1Compra, kitSeleccionado);

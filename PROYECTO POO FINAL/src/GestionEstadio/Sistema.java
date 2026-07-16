@@ -16,7 +16,11 @@ public class Sistema {
     private ArrayList<Compra> compras;
     private Scanner sc;
 
+    public ArrayList<Compra> getCompras() {
+        return compras;
+    }
 
+    /*Constructores */ 
     public Sistema() {
         this.usuarios = new ArrayList<>();
         this.partidos = new ArrayList<>();
@@ -28,10 +32,7 @@ public class Sistema {
         cargarComprasDesdeArchivo();
     }
 
-    public ArrayList<Compra> getCompras() {
-        return compras;
-    }
-
+    /*metodo main donde llamamos al metodo iniciar sesion */
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
         sistema.iniciarSecion();
@@ -40,7 +41,8 @@ public class Sistema {
 
 
 
-
+/*este metodo realiza la separacion al iniciar la secion y los manda a sus metodos correspondientes
+no se termina al salir de la sesion solo si detienes el programa */
 public void iniciarSecion() {
     // Este bucle mantiene el sistema encendido
     boolean sistemaActivo = true;
@@ -124,7 +126,7 @@ public void iniciarSecion() {
 }
 
  
-
+/*envia un correo al realizar una compra  */
 public static void notificar(Aficionado a, Compra c) {
     if (c == null) return;
 
@@ -136,6 +138,7 @@ public static void notificar(Aficionado a, Compra c) {
     enviarCorreo(a.getCorreo(), asunto, cuerpo);
 }
 
+/*envia un correo al realizar una compra  */
 public static void notificar(Aficionado a, Compra c, Kit k) {
     if (c == null || k == null) return;
 
@@ -147,6 +150,7 @@ public static void notificar(Aficionado a, Compra c, Kit k) {
     enviarCorreo(a.getCorreo(), asunto, cuerpo);
 }
 
+/*envia el reporte del todal de todas la compras */
 public static void notificar(Organizador o, int totalCompras, int totalEntradas, int totalKits, double montoTotal) {
     String asunto = "Reporte de compras registradas";
     String cuerpo = "Estimado/a " + o.getNombre() + ",\n\n" +
@@ -166,7 +170,7 @@ public static void notificar(Organizador o, int totalCompras, int totalEntradas,
 
 
 
-
+/*crea la arraylist de Usuarios que tiene aficionados y organizadores */
 private void cargarUsuariosDesdeArchivo() {
     //Cargamos cada archivo
 ArrayList<String> lineasUsuarios = Archivos.leerArchivo("usuarios.txt");
@@ -223,6 +227,7 @@ ArrayList<String> lineasUsuarios = Archivos.leerArchivo("usuarios.txt");
     }
 } 
 
+/*crea la arraylist de los kits */
 public void cargarKitsDesdeArchivo() {
     ArrayList<String> lineas = Archivos.leerArchivo("kits.txt");
     
@@ -240,6 +245,7 @@ public void cargarKitsDesdeArchivo() {
     }
 }
 
+/*crea la arraylist de las compras */
 public void cargarComprasDesdeArchivo() {
     // Usamos tu método de lectura (el genérico)
     ArrayList<String> lineas = Archivos.leerArchivo("compras.txt"); // O tu método unificado
@@ -264,6 +270,7 @@ public void cargarComprasDesdeArchivo() {
     }
 }
 
+/*envia el correo a mi correo electrinico(gmail) */
 public static void enviarCorreo(String destinatario, String asunto, String cuerpoMensaje) {
     // 1. Configuración de tu cuenta
     String remitente = "prodiegoplay@gmail.com";
@@ -296,7 +303,24 @@ public static void enviarCorreo(String destinatario, String asunto, String cuerp
         System.out.println("Error al enviar el correo: " + e.getMessage());
         e.printStackTrace(); // Esto te imprime detalles técnicos si algo sale mal
     }
-}
     }
+    public void guardarKitsEnArchivo() {
+    ArrayList<String> lineas = new ArrayList<>();
+    lineas.add("Codigo|Nombre|Descripcion|Partidos|Precio|Disponibles");
+    for (Kit k : this.kits) {
+        lineas.add(k.formatToLineaArchivo());
+    }
+    Archivos.sobrescribirArchivo("kits.txt", lineas);
+}
+
+    public void guardarPartidosEnArchivo() {
+    ArrayList<String> lineas = new ArrayList<>();
+    lineas.add("Codigo|Local|Visitante|Fecha|Estadio|Ciudad|Capacidad|General|Preferencial|VIP|Fase");
+    for (Partido p : this.partidos) {
+        lineas.add(p.formatToLineaArchivo());
+    }
+    Archivos.sobrescribirArchivo("partidos.txt", lineas);
+}
+}
         
 
