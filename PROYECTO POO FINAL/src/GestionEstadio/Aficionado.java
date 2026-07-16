@@ -10,7 +10,9 @@ public class Aficionado extends Usuario {
     private String celular;
     private String paisFavorito;
     Scanner sc = new Scanner(System.in);
-
+    
+    
+    //creacion de contructores
     public Aficionado(String codigoUnico, String cedula, String nombre, String apellido, String usuario, String contraseña, String correo, Rol rol, String celular, String paisFavorito) {
         super(codigoUnico, cedula, nombre, apellido, usuario, contraseña, correo, rol);
         this.celular=celular;
@@ -22,7 +24,8 @@ public class Aficionado extends Usuario {
         this.celular = celular;
         this.paisFavorito = paisFavorito;
     }
-
+    //sobrecarga
+    /*este metodo muestra las opciones del Afincionado y retorna la opicon elegida mandandola al Sistema */
     @Override
     public int mostrarMenu() {
         System.out.println("Menú de Aficionado: \r\n" + //
@@ -38,6 +41,19 @@ public class Aficionado extends Usuario {
 
     }
 
+    /*Este metodo muestra todas las Compras realizadas por el aficionado que inicio la sesion */
+        @Override
+    public void consultarEntrada(ArrayList<Compra> listaTotal){
+    System.out.println("Mis compras realizadas:");
+        for (Compra c : listaTotal) {
+            if (c.getCodigoAficionado().equals(this.codigoUnico)) {
+                System.out.println(c.toString());
+            }
+        }
+    } 
+
+
+    /*Este metodo muestra todos los partidos que estan registrados en el sistema */
     public void consultarPartidos(ArrayList<Partido> partidos){
         System.out.println("Partidos encontrados:");
         int contador=1;
@@ -58,78 +74,79 @@ public class Aficionado extends Usuario {
         }
     }
 
-    // Dentro de Aficionado.java, reemplaza tu método actual por esta estructura
-public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
-    System.out.println("Seleccione el código del partido:");
-    String codSeleccionado = sc.nextLine();
-    Partido pElegido = null;
-    for (Partido p : partidos) {
-        if (p.getCodigo().equalsIgnoreCase(codSeleccionado)) {
-            pElegido = p;
-            break;
+    /*Este metodo realiza una compra con el codigo del partido seleccionado, verifica que no esten agotadas las entradas 
+    y pregunta en que zona quiere comprar la entrada, retorna un mensaje si no hay suficinete stock  */
+    public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
+        System.out.println("Seleccione el código del partido:");
+        String codSeleccionado = sc.nextLine();
+        Partido pElegido = null;
+        for (Partido p : partidos) {
+            if (p.getCodigo().equalsIgnoreCase(codSeleccionado)) {
+                pElegido = p;
+                break;
+            }
         }
-    }
-    if (pElegido == null) {
-        System.out.println("Partido no encontrado.");
-        return;
-    }
-    System.out.println("Elija la zona: 1. General, 2. Preferencial, 3. VIP");
-    int opcion = Integer.parseInt(sc.nextLine());
-
-    double precio = 0;
-    String nombreZona = "";
-    int stockDisponible = 0;
-
-    switch (opcion) {
-        case 1:
-            precio = pElegido.getPrecioGeneral();
-            nombreZona = "General";
-            stockDisponible = pElegido.getEntradasGeneral();
-            break;
-        case 2:
-            precio = pElegido.getPrecioPreferencial();
-            nombreZona = "Preferencial";
-            stockDisponible = pElegido.getEntradasPreferencial();
-            break;
-        case 3:
-            precio = pElegido.getPrecioVIP();
-            nombreZona = "VIP";
-            stockDisponible = pElegido.getEntradasVIP();
-            break;
-        default:
-            System.out.println("Opción inválida.");
+        if (pElegido == null) {
+            System.out.println("Partido no encontrado.");
             return;
-    }
-
-    System.out.println("Ingrese cantidad:");
-    int cantidad = Integer.parseInt(sc.nextLine());
-
-    if (cantidad > 0 && cantidad <= stockDisponible) {
-        double total = cantidad * precio;
-        if (nombreZona.equals("General")) {
-            pElegido.setEntradasGeneral(stockDisponible - cantidad);
-        } else if (nombreZona.equals("Preferencial")) {
-            pElegido.setEntradasPreferencial(stockDisponible - cantidad);
-        } else if (nombreZona.equals("VIP")) {
-            pElegido.setEntradasVIP(stockDisponible - cantidad);
         }
-        System.out.println("Total a pagar: $" + total);
-        System.out.println("Ingrese número de tarjeta:");
-        String tarjeta = sc.nextLine();
-        System.out.println("Pago exitoso. Gracias por su compra.");
-        Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
-        sistema.getCompras().add(c1Compra);
-        Archivos.guardarLinea("compras.txt", c1Compra.formatToLineaArchivo()); 
-        Sistema.notificar(this, c1Compra);
-        } else {
-        System.out.println("Stock insuficiente o cantidad no válida.");
-    }
+        System.out.println("Elija la zona: 1. General, 2. Preferencial, 3. VIP");
+        int opcion = Integer.parseInt(sc.nextLine());
+
+        double precio = 0;
+        String nombreZona = "";
+        int stockDisponible = 0;
+
+        switch (opcion) {
+            case 1:
+                precio = pElegido.getPrecioGeneral();
+                nombreZona = "General";
+                stockDisponible = pElegido.getEntradasGeneral();
+                break;
+            case 2:
+                precio = pElegido.getPrecioPreferencial();
+                nombreZona = "Preferencial";
+                stockDisponible = pElegido.getEntradasPreferencial();
+                break;
+            case 3:
+                precio = pElegido.getPrecioVIP();
+                nombreZona = "VIP";
+                stockDisponible = pElegido.getEntradasVIP();
+                break;
+            default:
+                System.out.println("Opción inválida.");
+                return;
+        }
+
+        System.out.println("Ingrese cantidad:");
+        int cantidad = Integer.parseInt(sc.nextLine());
+
+        if (cantidad > 0 && cantidad <= stockDisponible) {
+            double total = cantidad * precio;
+            if (nombreZona.equals("General")) {
+                pElegido.setEntradasGeneral(stockDisponible - cantidad);
+            } else if (nombreZona.equals("Preferencial")) {
+                pElegido.setEntradasPreferencial(stockDisponible - cantidad);
+            } else if (nombreZona.equals("VIP")) {
+                pElegido.setEntradasVIP(stockDisponible - cantidad);
+            }
+            System.out.println("Total a pagar: $" + total);
+            System.out.println("Ingrese número de tarjeta:");
+            String tarjeta = sc.nextLine();
+            System.out.println("Pago exitoso. Gracias por su compra.");
+            Compra c1Compra = new Compra("ENTRADA", pElegido.getCodigo(), new Date(), cantidad, total, this.getCodigoUnico());
+            sistema.getCompras().add(c1Compra);
+            Archivos.guardarLinea("compras.txt", c1Compra.formatToLineaArchivo()); 
+            Sistema.notificar(this, c1Compra);
+            } else {
+            System.out.println("Stock insuficiente o cantidad no válida.");
+        }
     
     }
 
 
 
-
+    /*Realiza una compra de kit para el aficionado mostrando su codigo y en que partidos esta disponible  */
     public void comprarKit(ArrayList<Kit> listaKits, ArrayList<Partido> listaPartidos, Sistema sistema) {
     System.out.println("===== KITS DISPONIBLES =====");
     for (int i = 0; i < listaKits.size(); i++) {
@@ -152,13 +169,12 @@ public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
     System.out.println("Seleccione el número del kit que desea comprar:");
     int opcion = Integer.parseInt(sc.nextLine());
     if (opcion >= 1 && opcion <= listaKits.size()) {
-        Kit kitSeleccionado = listaKits.get(opcion - 1);
-        System.out.println("Ingrese cantidad:");
-        int cantidad = Integer.parseInt(sc.nextLine());
+    Kit kitSeleccionado = listaKits.get(opcion - 1);
+    System.out.println("Ingrese cantidad:");
+    int cantidad = Integer.parseInt(sc.nextLine());
         if (cantidad > 0 && cantidad <= kitSeleccionado.getDisponibles()) {
             double total = cantidad * kitSeleccionado.getPrecio();
-            kitSeleccionado.setDisponibles(kitSeleccionado.getDisponibles() - cantidad);
-            
+            kitSeleccionado.setDisponibles(kitSeleccionado.getDisponibles() - cantidad);            
             System.out.println("Total a pagar: $" + total);
             System.out.println("Ingrese número de tarjeta:");
             String tarjeta = sc.nextLine();
@@ -175,18 +191,10 @@ public void comprarEntrada(ArrayList<Partido> partidos, Sistema sistema) {
         System.out.println("Opción inválida.");
     }
 
-}
+    }
 
 
-    @Override
-    public void consultarEntrada(ArrayList<Compra> listaTotal){
-    System.out.println("Mis compras realizadas:");
-        for (Compra c : listaTotal) {
-            if (c.getCodigoAficionado().equals(this.codigoUnico)) {
-                System.out.println(c.toString());
-            }
-        }
-    }     
+    
 
     //Metodos Getters y Setters
      public void setCelular(String celular){

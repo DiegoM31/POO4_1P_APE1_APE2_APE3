@@ -23,6 +23,7 @@ public class Organizador extends Usuario {
     }
 
 
+    /*setters y getters */
     public String getEmpresa() {
         return empresa;
     }
@@ -36,7 +37,7 @@ public class Organizador extends Usuario {
         this.cargo = cargo;
     }
 
-
+    /*sobrecarga */
     @Override
     public int mostrarMenu() {
                 System.out.println("Menú de Organizador: \r\n" + //
@@ -56,7 +57,9 @@ public class Organizador extends Usuario {
             System.out.println(c.toString());              
        }
     }
+    
 
+    /*realiza un reporte y lo envia al correo con el metodo notificar */
     public void generarReporte(ArrayList<Compra> listaTotal) {
     int totalCompras = listaTotal.size();
     int contEntradas = 0;

@@ -12,6 +12,10 @@ public class Compra {
     private int cantidad;
     private double valorPagado;
     private String codigoAficionado;
+
+
+    /*constructores */
+    /*para compras nuevas */
     public Compra(String tipo, String codigoReferencia,Date fechacompra,int cantidad,double valorPagado,String codigoAficionado){
         this.codigoCompra="C"+String.format("%03d", ++contadorCompras);
         this.tipo=tipo;
@@ -22,6 +26,7 @@ public class Compra {
         this.codigoAficionado=codigoAficionado;
 
     }
+    /*para compras ya existentes */
     public Compra(String codigoCompra, String tipo, String codigoReferencia, Date fechacompra, int cantidad, double valorPagado, String codigoAficionado) {
         this.codigoCompra = codigoCompra;
         this.tipo = tipo;
@@ -36,6 +41,9 @@ public class Compra {
             contadorCompras = numeroActual;
         }
     }
+
+
+    /*setters y getters */
     public String getCodigoCompra() {
         return codigoCompra;
     }
@@ -75,10 +83,15 @@ public class Compra {
     public void setCodigoAficionado(String codigoAficionado){
         this.codigoAficionado=codigoAficionado;
     }
+
+
+
     public String formatToLineaArchivo() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return codigoCompra + "|" + tipo + "|" + codigoReferencia + "|" + sdf.format(fechacompra) + "|" + cantidad + "|" + valorPagado + "|" + codigoAficionado;
     }
+
+    /*sobrecarga */
     @Override
     public String toString(){
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");

@@ -23,7 +23,7 @@ public class Partido {
     private double precioPreferencial = 100.0;
     private double precioVIP = 200.0;
 
-
+    /*constructor */
     public Partido(String codigo,String seleccionLocal,String seleccionVisitante,Date fecha,String estadio,String ciudad,int capacidad,int entradasGeneral,int entradasPreferencial,int entradasVIP,String fase){
         
       this.codigo=codigo;
@@ -38,7 +38,9 @@ public class Partido {
       this.entradasVIP=entradasVIP;
       this.fase=fase;
     }
-    ////getters 
+    
+    
+    /*setters y getters */
     public String getCodigo(){
         return codigo;
     }
@@ -118,6 +120,8 @@ public class Partido {
         this.fase=fase;
     }
 
+
+    /*crea un arraylist */
     public static ArrayList<Partido> cargarpartidos(String archivo){
         ArrayList<Partido> partidos = new ArrayList<>();
 
@@ -126,7 +130,7 @@ public class Partido {
 
             String linea;
             
-            br.readLine(); //saltar el encabezado
+            br.readLine(); 
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
         while ((linea = br.readLine()) != null) {

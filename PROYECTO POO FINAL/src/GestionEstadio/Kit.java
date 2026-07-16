@@ -11,6 +11,8 @@ public class Kit {
     private int disponibles;
     public Kit(){
     }
+
+    /*constructor */
     public Kit(String codigo, String nombre, String descripcion, ArrayList<String> partidosIncluidos, double precio, int disponibles) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -20,6 +22,8 @@ public class Kit {
         this.disponibles = disponibles;
 
     }
+    
+    /*setters y getters */
     public String getCodigo() {
         return codigo;
     }
@@ -64,6 +68,9 @@ public class Kit {
         return this.codigo + "|" + this.nombre + "|" + this.descripcion + "|" + 
                getPartidosComoString() + "|" + this.precio + "|" + this.disponibles;
     }
+
+
+    /*sobrecarga */
     @Override
     public String toString(){
         return "-------------------"+

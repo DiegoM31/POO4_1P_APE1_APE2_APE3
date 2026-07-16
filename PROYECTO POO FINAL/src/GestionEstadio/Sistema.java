@@ -18,7 +18,6 @@ public class Sistema {
 
 
     public Sistema() {
-        // Inicializamos las listas vacías de forma segura sin ignorar parámetros
         this.usuarios = new ArrayList<>();
         this.partidos = new ArrayList<>();
         this.kits = new ArrayList<>();
@@ -43,7 +42,7 @@ public class Sistema {
 
 
 public void iniciarSecion() {
-    // Este bucle mantiene el sistema encendido pidiendo nuevos logins
+    // Este bucle mantiene el sistema encendido
     boolean sistemaActivo = true;
 
     while (sistemaActivo) {
@@ -137,7 +136,6 @@ public static void notificar(Aficionado a, Compra c) {
     enviarCorreo(a.getCorreo(), asunto, cuerpo);
 }
 
-// Notificación para Aficionado (Compra de kit)
 public static void notificar(Aficionado a, Compra c, Kit k) {
     if (c == null || k == null) return;
 
@@ -149,7 +147,6 @@ public static void notificar(Aficionado a, Compra c, Kit k) {
     enviarCorreo(a.getCorreo(), asunto, cuerpo);
 }
 
-// Notificación para Organizador (Reporte a tu correo personal)
 public static void notificar(Organizador o, int totalCompras, int totalEntradas, int totalKits, double montoTotal) {
     String asunto = "Reporte de compras registradas";
     String cuerpo = "Estimado/a " + o.getNombre() + ",\n\n" +
@@ -158,7 +155,6 @@ public static void notificar(Organizador o, int totalCompras, int totalEntradas,
                     "Entradas: " + totalEntradas + " | Kits: " + totalKits + "\n" +
                     "Monto total recaudado: $" + String.format("%.2f", montoTotal);
     
-    // Enviamos el reporte a tu correo personal
     enviarCorreo("diegomaldonadozalamea@gmail.com", asunto, cuerpo);
 }
 
@@ -172,13 +168,12 @@ public static void notificar(Organizador o, int totalCompras, int totalEntradas,
 
 
 private void cargarUsuariosDesdeArchivo() {
-    // 1. Cargamos cada archivo UNA SOLA VEZ en memoria RAM al iniciar el método
-    // Cambia esto temporalmente para probar:
+    //Cargamos cada archivo
 ArrayList<String> lineasUsuarios = Archivos.leerArchivo("usuarios.txt");
     ArrayList<String> lineasAficionados = Archivos.leerArchivo("aficionados.txt");
     ArrayList<String> lineasOrganizadores = Archivos.leerArchivo("organizadores.txt");
     this.partidos = Partido.cargarpartidos("partidos.txt");
-    // 2. Recorremos las líneas de usuarios saltando la cabecera
+    //Recorremos las líneas de usuarios
     for (int i = 1; i < lineasUsuarios.size(); i++) {
         String linea = lineasUsuarios.get(i);
         String[] datos = linea.split("\\|");
@@ -244,7 +239,7 @@ public void cargarKitsDesdeArchivo() {
         this.kits.add(k);
     }
 }
-// En Sistema.java, dentro de los métodos de carga:
+
 public void cargarComprasDesdeArchivo() {
     // Usamos tu método de lectura (el genérico)
     ArrayList<String> lineas = Archivos.leerArchivo("compras.txt"); // O tu método unificado
@@ -254,7 +249,7 @@ public void cargarComprasDesdeArchivo() {
         try {
             String[] datos = lineas.get(i).split("\\|");
             
-            // Aquí usamos el SEGUNDO constructor (el que sincroniza el contador)
+            // Aquí usamos el SEGUNDO constructor
             Compra compraCargada = new Compra(
                 datos[0], // Código existente (ej. C001)
                 datos[1], // Tipo
@@ -265,16 +260,14 @@ public void cargarComprasDesdeArchivo() {
                 datos[6] // Código Aficionado
             );
             this.compras.add(compraCargada);
-        } catch (Exception e) {
-            // Ignora líneas vacías o cabeceras que puedan fallar
-        }
+        } catch (Exception e) {        }
     }
 }
 
 public static void enviarCorreo(String destinatario, String asunto, String cuerpoMensaje) {
     // 1. Configuración de tu cuenta
     String remitente = "prodiegoplay@gmail.com";
-    String contraseña = "wwhf mraz moxy hwfg"; // La clave de aplicación de Google
+    String contraseña = "wwhf mraz moxy hwfg";
 
     // 2. Propiedades del servidor SMTP
     Properties props = new Properties();
@@ -284,7 +277,6 @@ public static void enviarCorreo(String destinatario, String asunto, String cuerp
     props.put("mail.smtp.port", "587");
 
     props.put("mail.smtp.ssl.trust", "*");
-    // 3. Autenticación
     Session session = Session.getInstance(props, new Authenticator() {
         protected PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(remitente, contraseña);
@@ -301,7 +293,6 @@ public static void enviarCorreo(String destinatario, String asunto, String cuerp
         System.out.println("Correo enviado exitosamente a: " + destinatario);
 
     } catch (MessagingException e) {
-        // Si ocurre algún error (ej. internet caído), entra aquí
         System.out.println("Error al enviar el correo: " + e.getMessage());
         e.printStackTrace(); // Esto te imprime detalles técnicos si algo sale mal
     }

@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
     public class Archivos {
-
+        /*lee lor txt */
     public static ArrayList<String> leerArchivo(String nombrearchivo) {
         ArrayList<String> lineas = new ArrayList<>();
         File archivo = null;
@@ -41,14 +41,17 @@ import java.util.ArrayList;
         }
         return lineas;
     }
-    public static void guardarLinea(String nombrearchivo, String linea) {
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombrearchivo, true))) {
-        bw.write(linea);
-        bw.newLine();
-    } catch (Exception e) {
-        System.out.println("Error al escribir en el archivo: " + e.getMessage());
-    }
-}   
+
+
+        /*añade mas lenas a mi txt */
+        public static void guardarLinea(String nombrearchivo, String linea) {
+         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombrearchivo, true))) {
+            bw.write(linea);
+            bw.newLine();
+        } catch (Exception e) {
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+    }   
 }        
 
 
