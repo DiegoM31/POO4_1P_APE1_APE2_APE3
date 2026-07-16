@@ -1,3 +1,5 @@
 CodigoUnico|Compra|codigo|fecha|cantidad|valor|codigoA
 
 C001|ENTRADA|M020|16/07/2026 08:15|23|2300.0|A005
+C002|ENTRADA|M020|16/07/2026 09:19|2|400.0|A005
+C003|KIT|Kit Favoritos del Público|16/07/2026 09:20|1|550.0|A005
